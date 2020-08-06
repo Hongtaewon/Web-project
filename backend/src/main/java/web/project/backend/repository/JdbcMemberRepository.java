@@ -1,22 +1,18 @@
-package web.project.backend.repository;
+/*package web.project.backend.repository;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.datasource.DataSourceUtils;
+import web.project.backend.orm.Member;
+import javax.sql.DataSource;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import javax.sql.DataSource;
-
-import web.project.backend.orm.Member;
-import org.springframework.jdbc.datasource.DataSourceUtils;
 
 public class JdbcMemberRepository implements MemberRepository {
 
-	
+	@Autowired
 	private final DataSource dataSource;
 	
 	public JdbcMemberRepository(DataSource dataSource) {
@@ -156,3 +152,4 @@ public class JdbcMemberRepository implements MemberRepository {
 		DataSourceUtils.releaseConnection(conn, dataSource);
 	}
 }
+*/

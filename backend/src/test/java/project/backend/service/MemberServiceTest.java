@@ -1,6 +1,9 @@
 package project.backend.service;
 
+import static org.assertj.core.api.Assertions.*;
+
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -8,10 +11,7 @@ import web.project.backend.orm.Member;
 import web.project.backend.repository.MemoryMemberRepository;
 import web.project.backend.service.MemberService;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.junit.Assert.assertThrows;
-
-public class MemberServiceTest {
+class MemberServiceTest {
 
 	MemberService memberService;
 	MemoryMemberRepository memberRepository;
@@ -51,8 +51,7 @@ public class MemberServiceTest {
 		//when
 		memberService.join(member1);
 		
-		IllegalStateException e = assertThrows(IllegalStateException.class, () -> memberService.join(member2));
-		
+		IllegalStateException e = Assertions.assertThrows(IllegalStateException.class, () -> memberService.join(member2));
 		assertThat(e.getMessage()).isEqualTo("이미 존재하는 회원입니다.");
 		
 /*		try {
@@ -63,16 +62,6 @@ public class MemberServiceTest {
 			// TODO: handle exception
 		}*/
 		//then
-	}
-	
-	@Test
-	void findMembers() {
-		
-	}
-	
-	@Test
-	void findOne() {
-		
 	}
 
 }
