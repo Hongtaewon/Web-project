@@ -3,16 +3,16 @@ package web.project.backend.repository;
 import java.util.List;
 import java.util.Optional;
 
-import web.project.backend.orm.Member;
+import web.project.backend.orm.user;
 
 
 public interface MemberRepository {
 	
-	Member save(Member member);
+	user save(user member);
 	
-	Optional<Member> findById(Long id);
-	Optional<Member> findByName(String name);
+	Optional<user> findById(Long id);
+	Optional<user> findByName(String name);
 	
-	List<Member> findAll();
+	List<user> findAll();
 
 }

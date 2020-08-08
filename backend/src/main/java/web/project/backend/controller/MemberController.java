@@ -8,7 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import web.project.backend.orm.Member;
+import web.project.backend.orm.user;
 import web.project.backend.service.MemberService;
 
 @Controller
@@ -30,7 +30,7 @@ public class MemberController {
 	
 	@PostMapping("/members/new")
 	public String create(MemberForm form) {
-		Member member = new Member();
+		user member = new user();
 		member.setName(form.getName());
 		
 		memberService.join(member);
@@ -40,7 +40,7 @@ public class MemberController {
 	
 	@GetMapping("/members")
 	public String list(Model model) {
-		List<Member> members = memberService.findMembers();
+		List<user> members = memberService.findMembers();
 		model.addAttribute("members",members);
 		
 		return "members/memberList";

@@ -7,36 +7,36 @@ import java.util.Map;
 import java.util.Optional;
 
 
-import web.project.backend.orm.Member;
+import web.project.backend.orm.user;
 
 
 public class MemoryMemberRepository implements MemberRepository {
 
 	
-	private static Map<Long,Member> store = new HashMap<>();
+	private static Map<Long,user> store = new HashMap<>();
 	private static long sequence = 0L;
 	
 	@Override
-	public Member save(Member member) {
+	public user save(user member) {
 		member.setId(++sequence);
 		store.put(member.getId(), member);
 		return member;
 	}
 
 	@Override
-	public Optional<Member> findById(Long id) {
+	public Optional<user> findById(Long id) {
 		return Optional.ofNullable(store.get(id));
 	}
 
 	@Override
-	public Optional<Member> findByName(String name) {
+	public Optional<user> findByName(String name) {
 		return store.values().stream()
 				.filter(member -> member.getName().equals(name))
 				.findAny();
 	}
 
 	@Override
-	public List<Member> findAll() {
+	public List<user> findAll() {
 		// TODO Auto-generated method stub
 		return new ArrayList<>(store.values());
 	}

@@ -3,7 +3,7 @@ package project.backend.repository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
-import web.project.backend.orm.Member;
+import web.project.backend.orm.user;
 import web.project.backend.repository.MemoryMemberRepository;
 
 import static org.assertj.core.api.Assertions.*;
@@ -20,12 +20,12 @@ class MemoryMemberRepositoryTest {
 	}
 	@Test
 	public void save() {
-		Member member = new Member();
+		user member = new user();
 		member.setName("spring");
 		
 		repository.save(member);
 		
-		Member result = repository.findById(member.getId()).get();
+		user result = repository.findById(member.getId()).get();
 		
 		assertThat(member).isEqualTo(result);
 		
@@ -33,32 +33,32 @@ class MemoryMemberRepositoryTest {
 	
 	@Test
 	public void FindbyName() {
-		Member member1 = new Member();
+		user member1 = new user();
 		member1.setName("spring1");
 		repository.save(member1);
 		
 
-		Member member2 = new Member();
+		user member2 = new user();
 		member2.setName("spring2");
 		repository.save(member2);
 		
-		Member result = repository.findByName("spring1").get();
+		user result = repository.findByName("spring1").get();
 		
 		assertThat(result).isEqualTo(member1);
 	}
 	
 	@Test
 	public void findAll() {
-		Member member1 = new Member();
+		user member1 = new user();
 		member1.setName("spring1");
 		repository.save(member1);
 		
 
-		Member member2 = new Member();
+		user member2 = new user();
 		member2.setName("spring2");
 		repository.save(member2);
 		
-		List<Member> result = repository.findAll();
+		List<user> result = repository.findAll();
 		assertThat(result.size()).isEqualTo(2);
 		
 	}

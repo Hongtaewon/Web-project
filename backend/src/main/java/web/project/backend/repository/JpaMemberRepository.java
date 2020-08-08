@@ -8,7 +8,7 @@ import javax.persistence.PersistenceContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import web.project.backend.orm.Member;
+import web.project.backend.orm.user;
 
 
 public class JpaMemberRepository implements MemberRepository {
@@ -22,28 +22,28 @@ public class JpaMemberRepository implements MemberRepository {
 	}
 
 	@Override
-	public Member save(Member member) {
+	public user save(user member) {
 		em.persist(member);
 		return member;
 	}
 
 	@Override
-	public Optional<Member> findById(Long id) {
-		Member member = em.find(Member.class, id);
+	public Optional<user> findById(Long id) {
+		user member = em.find(user.class, id);
 		return Optional.ofNullable(member);
 	}
 
 	@Override
-	public Optional<Member> findByName(String name) {
-		List<Member> result = em.createQuery("select m from Member m where m.name = :name",Member.class)
+	public Optional<user> findByName(String name) {
+		List<user> result = em.createQuery("select m from Member m where m.name = :name",user.class)
 							.setParameter("name", name)
 							.getResultList();
 		return result.stream().findAny();
 	}
 
 	@Override
-	public List<Member> findAll() {
-		List<Member> result = em.createQuery("select m from Member m",Member.class)
+	public List<user> findAll() {
+		List<user> result = em.createQuery("select m from Member m",user.class)
 								.getResultList();
 		
 		return result;

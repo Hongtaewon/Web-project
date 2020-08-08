@@ -4,10 +4,10 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import web.project.backend.orm.Member;
+import web.project.backend.orm.user;
 
-public interface SpringDataJpaMemberRepository extends JpaRepository<Member, Long>, MemberRepository {
+public interface SpringDataJpaMemberRepository extends JpaRepository<user, Long>, MemberRepository {
 
 	@Override
-	Optional<Member> findByName(String name);
+	Optional<user> findByName(String name);
 }

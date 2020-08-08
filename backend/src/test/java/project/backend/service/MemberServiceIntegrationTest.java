@@ -6,7 +6,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 import web.project.backend.BackendApplication;
-import web.project.backend.orm.Member;
+import web.project.backend.orm.user;
 import web.project.backend.repository.MemberRepository;
 import web.project.backend.service.MemberService;
 
@@ -26,21 +26,21 @@ class MemberServiceIntegrationTest {
 	@Test
 	public void 회원가입() throws Exception {
 		// Given
-		Member member = new Member();
+		user member = new user();
 		member.setName("hello");
 		// When
 		Long saveId = memberService.join(member);
 		// Then
-		Member findMember = memberRepository.findById(saveId).get();
+		user findMember = memberRepository.findById(saveId).get();
 		assertEquals(member.getName(), findMember.getName());
 	}
 
 	@Test
 	public void 중복_회원_예외() throws Exception {
 		// Given
-		Member member1 = new Member();
+		user member1 = new user();
 		member1.setName("spring");
-		Member member2 = new Member();
+		user member2 = new user();
 		member2.setName("spring");
 		// When
 		memberService.join(member1);

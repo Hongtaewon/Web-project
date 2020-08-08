@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import org.springframework.transaction.annotation.Transactional;
 
-import web.project.backend.orm.Member;
+import web.project.backend.orm.user;
 import web.project.backend.repository.MemberRepository;
 
 
@@ -21,7 +21,7 @@ public class MemberService {
 	/*
 	 * 회원 가입
 	 * */
-	public Long join(Member member) {
+	public Long join(user member) {
 		//같은 이름이 있는 중복 회원 x
 		validateDubplicateMember(member);
 		
@@ -30,7 +30,7 @@ public class MemberService {
 		return member.getId();
 	}
 
-	private void validateDubplicateMember(Member member) {
+	private void validateDubplicateMember(user member) {
 		memberRepository.findByName(member.getName())
 				.ifPresent(m -> {
 					throw new IllegalStateException("이미 존재하는 회원입니다.");
@@ -40,11 +40,11 @@ public class MemberService {
 	/*
 	 * 전체 회원 조회
 	 * */
-	public List<Member> findMembers() {
+	public List<user> findMembers() {
 		return memberRepository.findAll();
 	}
 	
-	public Optional<Member> findOne(Long memberId) {
+	public Optional<user> findOne(Long memberId) {
 		return memberRepository.findById(memberId);	
 	}
 
