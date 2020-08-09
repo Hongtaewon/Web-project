@@ -1,4 +1,4 @@
-package project.backend.repository;
+/*package project.backend.repository;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
@@ -63,3 +63,4 @@ class MemoryMemberRepositoryTest {
 		
 	}
 }
+*/

@@ -8,7 +8,7 @@ import lombok.Getter;
 
 @Getter
 @Entity(name="post_like")
-public class Post_like {
+public class Post_like extends BaseEntity {
 	
 	@Column
 	private Long post_id; // 포스트 아이디

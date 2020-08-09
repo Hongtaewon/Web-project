@@ -8,13 +8,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import web.project.backend.orm.user;
+import web.project.backend.orm.Member;
 import web.project.backend.service.MemberService;
 
 @Controller
 public class MemberController {
 
-	
+	@Autowired
 	private final MemberService memberService;
 	
 	@Autowired
@@ -30,17 +30,31 @@ public class MemberController {
 	
 	@PostMapping("/members/new")
 	public String create(MemberForm form) {
-		user member = new user();
-		member.setName(form.getName());
+		Member member = new Member(form.getLoginid(), form.getName(), 
+									form.getNick_name(), form.getPassword(), form.getEmail());
 		
 		memberService.join(member);
 		
 		return "redirect:/";
 	}
 	
+	@GetMapping("/members/remove")
+	public String removeForm() {
+		return "/members/removeMemberForm";
+	}
+	
+	@PostMapping("/members/remove")
+	public String remove(MemberForm form) {
+		Member member = memberService.findOne(form.getLoginid()).get();
+		
+		memberService.removeMember(member);
+		
+		return "redirect:/";
+	}
+	
 	@GetMapping("/members")
 	public String list(Model model) {
-		List<user> members = memberService.findMembers();
+		List<Member> members = memberService.findMembers();
 		model.addAttribute("members",members);
 		
 		return "members/memberList";

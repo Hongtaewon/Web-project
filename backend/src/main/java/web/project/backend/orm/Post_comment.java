@@ -6,7 +6,7 @@ import javax.persistence.Entity;
 import lombok.Getter;
 
 @Getter
-@Entity(name="comment")
+@Entity(name="post_comment")
 public class Post_comment extends BaseEntity {
 	
 	@Column
@@ -14,11 +14,11 @@ public class Post_comment extends BaseEntity {
 	@Column
 	private Long user_id; //코멘트를 단 유저 아이디
 	@Column
-	private boolean enabled; //숨김 기능
+	private int enabled; //숨김 기능
 	@Column
-	private String comment; //코멘트 내용
+	private String comments; //코멘트 내용
 	@Column
-	private int like; //좋아요. comment_like를 cnt해서 저장함.
+	private int likes; //좋아요. comment_like를 cnt해서 저장함.
 	
 
 }

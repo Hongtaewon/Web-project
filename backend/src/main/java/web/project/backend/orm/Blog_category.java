@@ -6,7 +6,7 @@ import javax.persistence.*;
 import lombok.Getter;
 
 @Getter
-@Entity(name="category")
+@Entity(name="blog_category")
 public class Blog_category extends BaseEntity{
 
 	@Column(nullable = false)

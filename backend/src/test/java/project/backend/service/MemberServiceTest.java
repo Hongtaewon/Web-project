@@ -1,4 +1,4 @@
-package project.backend.service;
+/*package project.backend.service;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -54,14 +54,15 @@ class MemberServiceTest {
 		IllegalStateException e = Assertions.assertThrows(IllegalStateException.class, () -> memberService.join(member2));
 		assertThat(e.getMessage()).isEqualTo("이미 존재하는 회원입니다.");
 		
-/*		try {
+		try {
 			memberService.join(member2);
 			fail();
 		} catch (IllegalStateException e) {
 			assertThat(e.getMessage()).isEqualTo("이미 존재하는 회원입니다.");
 			// TODO: handle exception
-		}*/
+		}
 		//then
 	}
 
 }
+*/

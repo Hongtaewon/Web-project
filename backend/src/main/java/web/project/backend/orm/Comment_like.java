@@ -11,7 +11,7 @@ import lombok.Getter;
 public class Comment_like extends BaseEntity{
 	
 	@Column
-	private Long comment_id;
+	private Long comment_id; //코멘트가 가지고 있는 아이디
 	@Column
-	private Long user_id;
+	private Long user_id; //유저 아이디
 }

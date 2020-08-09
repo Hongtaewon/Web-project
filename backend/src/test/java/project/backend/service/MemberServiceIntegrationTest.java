@@ -1,4 +1,4 @@
-package project.backend.service;
+/*package project.backend.service;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,4 +49,4 @@ class MemberServiceIntegrationTest {
 																												// 한다.
 		assertThat(e.getMessage()).isEqualTo("이미 존재하는 회원입니다.");
 	}
-}
+}*/

@@ -11,7 +11,7 @@ import lombok.Getter;
 
 @Getter
 @Entity
-public class Post_category {
+public class Post_category extends BaseEntity {
 
 	@Column
 	private Long category_id; // 카테고리 아이디

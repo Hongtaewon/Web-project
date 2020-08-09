@@ -3,16 +3,18 @@ package web.project.backend.orm;
 
 import javax.persistence.*;
 
-
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
-@Entity(name="user")
-public class user extends BaseEntity{
-	
+@Entity(name="member")
+@AllArgsConstructor
+@NoArgsConstructor
+public class Member extends BaseEntity{
 	
 	@Column(nullable = false)
-	private String id; // 로그인 시 사용하는 아이디
+	private String loginid; // 로그인 시 사용하는 아이디
 	@Column(nullable = false)
 	private String name; // 사용자의 이름
 	@Column(nullable = false)

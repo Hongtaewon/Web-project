@@ -1,4 +1,4 @@
-package web.project.backend.repository;
+/*package web.project.backend.repository;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -46,3 +46,4 @@ public class MemoryMemberRepository implements MemberRepository {
 	}
 
 }
+*/

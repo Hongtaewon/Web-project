@@ -3,16 +3,22 @@ package web.project.backend.repository;
 import java.util.List;
 import java.util.Optional;
 
-import web.project.backend.orm.user;
+import org.springframework.stereotype.Repository;
+
+import web.project.backend.orm.Member;
 
 
 public interface MemberRepository {
 	
-	user save(user member);
+	Member save(Member member);
 	
-	Optional<user> findById(Long id);
-	Optional<user> findByName(String name);
+	Optional<Member> findByloginid(String id);
 	
-	List<user> findAll();
+	List<Member> findAll();
+	
+	void delete(Member member);
+	
+	
+
 
 }
