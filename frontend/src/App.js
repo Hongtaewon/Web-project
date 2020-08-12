@@ -1,39 +1,50 @@
 import React from "react";
+import {
+  BrowserRouter as Router,
+  Redirect,
+  Route,
+  Switch,
+} from 'react-router-dom';
 import axios from "axios";
+import APIMessage from "./page/blog/APIMessage"
+
 
 export default class App extends React.Component {
-  state = {
-    isLoading: true,
+
+
+  getTest = async () => {
+      //const {data} = await axios.get("/test");
+
+  var message = new APIMessage("Member");
+  console.log(message);
+
+  //axios.post("/test11", APIMessage);
+
   };
-  getMembers = async () => {
-    const { data
-    } = await axios.get(
-      "/members"
-    );
-    this.setState({ data, isLoading: false });
-  };
+
+  _redirectToHome() {
+    return <Redirect to="/" />;
+  }
+
   componentDidMount() {
-    this.getMembers();
+    this.getTest();
   }
   render() {
-    const { isLoading, data } = this.state;
-
-    console.log(data);
     return (
-      <section className="container">
-        {isLoading ? (
-          <div className="loader">
-            <span className="loader__text">Loading...</span>
-          </div>
-        ) : (
-          <div className="movies">
-            {data.map(d => 
-              <div key={d.idx}> id: {d.loginid} name: {d.name} nickname: {d.nick_name} email: {d.email} </div>
-              )}
-          </div>
-        )
-        }
-      </section>
-    );
+
+      <Router>
+        <div>
+
+          {/* content */}
+
+          <Switch>
+            {/* Post List*/}
+
+            <Route render={this._redirectToHome} />
+
+          </Switch>
+        </div>
+      </Router>
+    )
   }
 }
