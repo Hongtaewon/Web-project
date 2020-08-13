@@ -46,7 +46,7 @@ public class MemberController {
 	public void postTest(@RequestBody APIMessage<?> message) {
 		
 		
-		System.out.println(message.getBody());
+		System.out.println(message);
 	}
 	
 	@PostMapping("/members/new")

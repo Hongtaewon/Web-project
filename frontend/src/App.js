@@ -15,10 +15,16 @@ export default class App extends React.Component {
   getTest = async () => {
       //const {data} = await axios.get("/test");
 
-  var message = new APIMessage("Member");
+  var test = {
+    test: "test",
+    type: "type"
+  };
+
+  var message = new APIMessage("Member",test,"OK","이런");
+  
   console.log(message);
 
-  //axios.post("/test11", APIMessage);
+  axios.post("/test11", message);
 
   };
 

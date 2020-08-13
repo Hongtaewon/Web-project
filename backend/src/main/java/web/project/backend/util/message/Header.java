@@ -13,7 +13,6 @@ public class Header
 {
 	private String event_id = "";
 	private String request_id = "";
-	private String Request_ip = "";
 	private String eventTime = "";
 	
 	public Header() {
@@ -59,18 +58,6 @@ public class Header
 	public void setRequestId(String request_id)
 	{
 		this.request_id = request_id;
-	}
-	
-	@JsonGetter("Requestip")
-	public String getRequestIp()
-	{
-		return this.Request_ip;
-	}
-
-	@JsonSetter("Requestip")
-	public void setRequestIp(String Request_ip)
-	{
-		this.Request_ip = Request_ip;
 	}
 
 	@Override
