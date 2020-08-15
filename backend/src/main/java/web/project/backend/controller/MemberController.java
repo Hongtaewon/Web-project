@@ -7,6 +7,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import web.project.backend.orm.Member;
@@ -14,6 +16,7 @@ import web.project.backend.service.MemberService;
 import web.project.backend.util.message.APIMessage;
 
 @RestController
+@RequestMapping("/member")
 public class MemberController {
 
 	@Autowired
@@ -24,8 +27,7 @@ public class MemberController {
 		this.memberService = memberService;
 	}
 	
-
-	@GetMapping("/members/new")
+	@RequestMapping(method=RequestMethod.GET,path="/test")
 	public String createForm() {
 		return "/members/createMemberForm";
 	}
