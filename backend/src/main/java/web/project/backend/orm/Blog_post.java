@@ -8,7 +8,8 @@ import lombok.Getter;
 @Entity(name="blog_post")
 public class Blog_post extends BaseEntity{
 	
-	
+	@Column
+	private Long blog_id; //블로그 아이디
 	@Column
 	private String title; //포스트 제목
 	@Column

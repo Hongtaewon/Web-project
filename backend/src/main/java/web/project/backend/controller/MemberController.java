@@ -27,11 +27,6 @@ public class MemberController {
 		this.memberService = memberService;
 	}
 	
-	@RequestMapping(method=RequestMethod.GET,path="/test")
-	public String createForm() {
-		return "/members/createMemberForm";
-	}
-	
 	@GetMapping("/test")
 	public APIMessage<?> testing() {
 		
@@ -49,30 +44,6 @@ public class MemberController {
 		
 		
 		System.out.println(message);
-	}
-	
-	@PostMapping("/members/new")
-	public String create(MemberForm form) {
-		Member member = new Member(form.getLoginid(), form.getName(), 
-									form.getNick_name(), form.getPassword(), form.getEmail());
-		
-		memberService.join(member);
-		
-		return "redirect:/";
-	}
-	
-	@GetMapping("/members/remove")
-	public String removeForm() {
-		return "/members/removeMemberForm";
-	}
-	
-	@PostMapping("/members/remove")
-	public String remove(MemberForm form) {
-		Member member = memberService.findOne(form.getLoginid()).get();
-		
-		memberService.removeMember(member);
-		
-		return "redirect:/";
 	}
 	
 	@GetMapping("/members")

@@ -1,10 +1,14 @@
 import React from 'react';
+import {Header, Content} from 'components/blog';
 
 const main = () => {
     return (
-        <div>
-            test
-        </div>
+    <div>
+        <Header />
+        <Content />
+    </div>
+
+
     );
 };
 

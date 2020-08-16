@@ -12,8 +12,8 @@ export default class App extends React.Component {
     return (
       <div>
         <Switch>       
-          <Route path="/" component={home} />
-          <Route path="/blog/:kind" component={blog_main} /> 
+          <Route exact path="/" component={home} />
+          <Route path="/blog/1" component={blog_main} /> 
           <Route component={NotFoundPage} />
         </Switch>
       </div>
