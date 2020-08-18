@@ -67,4 +67,4 @@ const getToken = () => {
     const token = Storage.local.get('__AUTH__') || Storage.session.get('__AUTH__');
     
     return `Bearer ${token}`
-  };
+};

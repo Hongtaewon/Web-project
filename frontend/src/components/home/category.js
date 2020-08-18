@@ -1,7 +1,7 @@
 import React from 'react';
 
 
-const category = () => {
+const Category = () => {
 
     return (
         <div className="container">
@@ -30,4 +30,4 @@ const category = () => {
     );
 };
 
-export default category;
+export default Category;

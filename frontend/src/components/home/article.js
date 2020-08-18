@@ -1,7 +1,7 @@
 import React from 'react';
 
 
-const article = () => {
+const Article = () => {
 
     return (
         <div className="container">
@@ -15,4 +15,4 @@ const article = () => {
     );
 };
 
-export default article;
+export default Article;

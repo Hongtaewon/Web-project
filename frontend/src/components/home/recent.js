@@ -1,6 +1,6 @@
 import React from 'react';
 
-const recent = () => {
+const Recent = () => {
 
     return (
         <div className="container">
@@ -15,4 +15,4 @@ const recent = () => {
     );
 };
 
-export default recent;
+export default Recent;

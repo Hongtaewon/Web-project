@@ -1,6 +1,6 @@
 import React from 'react';
 
-const search = () => {
+const Search = () => {
 
     return (
         <div className="container">
@@ -14,4 +14,4 @@ const search = () => {
     );
 };
 
-export default search;
+export default Search;
