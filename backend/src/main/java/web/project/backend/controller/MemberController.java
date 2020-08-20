@@ -1,6 +1,10 @@
 package web.project.backend.controller;
 
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.ListIterator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
@@ -16,7 +20,7 @@ import web.project.backend.service.MemberService;
 import web.project.backend.util.message.APIMessage;
 
 @RestController
-@RequestMapping("/member")
+@RequestMapping("blog/member")
 public class MemberController {
 
 	@Autowired
@@ -27,23 +31,19 @@ public class MemberController {
 		this.memberService = memberService;
 	}
 	
-	@GetMapping("/test")
-	public APIMessage<?> testing() {
+	@PostMapping("/signUp")
+	public APIMessage<?> signUp(@RequestBody APIMessage<Member> message) {
 		
-		APIMessage<Member> test = new APIMessage<>("Member");
+		APIMessage<Member> response = memberService.signUp(message);
 		
-		Member member = new Member("11","22","33","44","55");
-		
-		test.getBody().setAny(member);
-		
-		return test;
+		return response;
 	}
-	
-	@PostMapping("/test11")
-	public void postTest(@RequestBody APIMessage<?> message) {
+	@PostMapping("/signIn")
+	public APIMessage<?> signIn(@RequestBody APIMessage<Member> message) {
 		
+		APIMessage<Member> response = memberService.signIn(message);
 		
-		System.out.println(message);
+		return response;
 	}
 	
 	@GetMapping("/members")

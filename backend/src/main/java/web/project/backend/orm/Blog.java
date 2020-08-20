@@ -18,5 +18,5 @@ public class Blog extends BaseEntity {
 	@Column
 	private Long member_id; // 블로그 멤버 아이디
 	@Column
-	private Long post_id; // 포스트 아이디
+	private Long visit_cnt; // 방문자수
 }
