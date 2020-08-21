@@ -2,6 +2,8 @@ package web.project.backend.orm;
 
 
 import java.time.LocalDateTime;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import javax.persistence.*;
 
@@ -41,5 +43,7 @@ public class Member extends BaseEntity{
 	private LocalDateTime last_login_try_Date; // 마지막으로 로그인을 시도한 시간
 	@Column
 	private int is_lock; // 로그인 제한 여부
+	@Column
+	private String role; // 권한
 	
 }

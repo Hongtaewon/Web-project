@@ -2,7 +2,7 @@ import axios from "axios";
 import APIMessage from "pages/blog/APIMessage";
 import {Storage} from 'api/storage';
 
-const API_URL = '';
+const API_BASE_URL = '';
 
 //Post 관련 API
 export const getPost = (postId) => axios.get(`${API_BASE_URL}/blog/blog-post/${postId}`);
@@ -30,7 +30,7 @@ export const deletePost = (id) => axios.post(`${API_BASE_URL}/blog/blog-post/${i
 );
 
 //Member 관련 API
-export const login = (APIMessage) => axios.post(`${API_BASE_URL}/Member/login`,{APIMessage});
+export const login = (APIMessage) => axios.post(`${API_BASE_URL}/blog/Auth/signIn`,{APIMessage});
 export const getMember = () => axios.post(`${API_BASE_URL}/Member/info`,{},
     {
         headers: {

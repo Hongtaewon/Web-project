@@ -1,12 +1,12 @@
 package web.project.backend.security.jwt;
 
-import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.util.Date;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -15,7 +15,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import web.project.backend.orm.Member;
 
-@Component
+@Service
 public class JwtUtil {
 
     public final static long TOKEN_VALIDATION_SECOND = 1000L * 10;
@@ -40,7 +40,7 @@ public class JwtUtil {
     }
 
     public String getUsername(String token) {
-        return extractAllClaims(token).get("username", String.class);
+        return extractAllClaims(token).get("", String.class);
     }
 
     public Boolean isTokenExpired(String token) {
@@ -49,19 +49,23 @@ public class JwtUtil {
     }
 
     public String generateToken(Member member) {
-        return doGenerateToken(member.getName(), TOKEN_VALIDATION_SECOND);
+        return doGenerateToken(member, TOKEN_VALIDATION_SECOND);
     }
 
     public String generateRefreshToken(Member member) {
-        return doGenerateToken(member.getName(), REFRESH_TOKEN_VALIDATION_SECOND);
+        return doGenerateToken(member, REFRESH_TOKEN_VALIDATION_SECOND);
     }
 
-    public String doGenerateToken(String username, long expireTime) {
+    public String doGenerateToken(Member member, long expireTime) {
 
         Claims claims = Jwts.claims();
-        claims.put("username", username);
-
+        claims.put("loginid", member.getLoginid());
+        claims.put("name", member.getName());
+        claims.put("nick_name", member.getNick_name());
+        claims.put("role", member.getRole());
+        
         String jwt = Jwts.builder()
+        		.setId(member.getRole())
                 .setClaims(claims)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + expireTime))
@@ -71,6 +75,7 @@ public class JwtUtil {
         return jwt;
     }
 
+    // JwtAuthFilter 구현해야함.
     public Boolean validateToken(String token, UserDetails userDetails) {
         final String username = getUsername(token);
 

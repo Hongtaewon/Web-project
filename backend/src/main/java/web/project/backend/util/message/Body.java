@@ -1,6 +1,8 @@
 package web.project.backend.util.message;
 
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
@@ -11,7 +13,6 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 public class Body<T>
 {
 	private T any;
-	private List<T> anyList;
 
 	protected Body()
 	{
@@ -28,18 +29,7 @@ public class Body<T>
 	{
 		this.any = any;
 	}
-
-	@JsonGetter("AnyList")
-	public List<T> getAnyList()
-	{
-		return this.anyList;
-	}
-	@JsonSetter("AnyList")
-	public void setAnyList(List<T> anyList)
-	{
-		this.anyList = anyList;
-	}
-
+	
 	@Override
 	public String toString()
 	{

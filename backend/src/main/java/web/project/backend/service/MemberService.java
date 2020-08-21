@@ -18,14 +18,7 @@ import web.project.backend.util.message.APIMessage;
 public class MemberService {
 
 	@Autowired
-	private final MemberRepository memberRepository;
-	
-	
-	public MemberService(MemberRepository memberRepository) {
-		this.memberRepository = memberRepository;
-	}
-
-
+	private MemberRepository memberRepository;
 	
 	private boolean validateDubplicateMember(Member member) {
 		return memberRepository.findByloginid(member.getLoginid()).isPresent();
