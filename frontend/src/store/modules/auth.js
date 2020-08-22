@@ -7,7 +7,7 @@ import * as api from 'api/api';
 //import { Storage } from 'lib/storage';
 
 //action types
-/*const LOGIN = 'auth/LOGIN'
+const LOGIN = 'auth/LOGIN'
 const SOCIAL_LOGIN = 'auth/SOCIAL_LOGIN'
 const LOGOUT = 'auth/LOGOUT'
 const GET_USER = 'auth/GET_USER';
@@ -15,7 +15,7 @@ const GET_USER = 'auth/GET_USER';
 export const login = createAction(LOGIN, api.login);
 export const socialLogin = createAction(SOCIAL_LOGIN);
 export const logout = createAction(LOGOUT);
-export const getUser = createAction(GET_USER, api.getUser);
+export const getUser = createAction(GET_USER, api.getMember);
 
 const initialState = Map({
   isAuthenticated: false,
@@ -82,4 +82,4 @@ export default handleActions({
       return state.set('isAuthenticated', false);
     }
   })
-}, initialState);*/
+}, initialState);

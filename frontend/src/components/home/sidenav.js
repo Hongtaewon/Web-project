@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import {Link} from 'react-router-dom';
-import { Button } from 'react-bootstrap';
+import { Button } from '@material-ui/core';
+import LoginMenu from 'components/login/LoginMenu';
 
 const Sidenav = () => {
 
@@ -17,6 +18,7 @@ const Sidenav = () => {
         <div className="container">
             <div className="sidenav">
                 <h2>Web_Project Blog</h2>
+                <p><LoginMenu  isAuthenticated={false}/></p>
                 <Link to="/about">소개글</Link>
                 <p>
                     <input 
