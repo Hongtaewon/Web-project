@@ -5,10 +5,18 @@ import {
 } from 'react-router-dom';
 import {home,NotFoundPage,blog_main} from 'pages';
 import LoginContainer from 'container/LoginContainer';
+import * as authActions from "store/modules/auth";
+import { connect } from 'react-redux';
+import { bindActionCreators } from "redux";
 
-export default class App extends React.Component {
+class App extends React.Component {
+
+
+  
 
   componentDidMount() {
+    const { AuthActions } = this.props;    
+    AuthActions.getUser();
   }
 
   render() {
@@ -28,3 +36,11 @@ export default class App extends React.Component {
     )
   }
 }
+
+export default connect(
+  state => ({   
+  }),
+  dispatch => ({
+    AuthActions: bindActionCreators(authActions, dispatch)
+  })
+)(App);

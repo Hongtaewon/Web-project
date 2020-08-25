@@ -9,10 +9,10 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class RedisUtil {
-
+	
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
-
+    
     public String getData(String key){
         ValueOperations<String,String> valueOperations = stringRedisTemplate.opsForValue();
         return valueOperations.get(key);

@@ -4,16 +4,16 @@ import { Map, fromJS } from 'immutable';
 import { pender } from 'redux-pender';
 
 import * as api from 'api/api';
-//import { Storage } from 'lib/storage';
+import { Storage } from 'api/storage';
 
 //action types
 const LOGIN = 'auth/LOGIN'
-const SOCIAL_LOGIN = 'auth/SOCIAL_LOGIN'
+//const SOCIAL_LOGIN = 'auth/SOCIAL_LOGIN'
 const LOGOUT = 'auth/LOGOUT'
 const GET_USER = 'auth/GET_USER';
 
 export const login = createAction(LOGIN, api.login);
-export const socialLogin = createAction(SOCIAL_LOGIN);
+//export const socialLogin = createAction(SOCIAL_LOGIN);
 export const logout = createAction(LOGOUT);
 export const getUser = createAction(GET_USER, api.getMember);
 
@@ -38,7 +38,7 @@ export default handleActions({
     return state.set('isAuthenticated', false)
       .set('loginSuccess', false);
   },
-  [SOCIAL_LOGIN]: (state, action) => {
+  /*[SOCIAL_LOGIN]: (state, action) => {
     console.log("SOCIAL LOGIN onSuccess")
     const rememberMe = false;
     if (rememberMe) {
@@ -47,7 +47,7 @@ export default handleActions({
       Storage.session.set("__AUTH__", action.payload);
     }
     return state.set('isAuthenticated', true);
-  },
+  },*/
   ...pender({
     type: LOGIN,
     onSuccess: (state, action) => {

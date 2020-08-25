@@ -2,6 +2,8 @@ package web.project.backend.controller;
 
 import java.util.List;
 
+import javax.servlet.http.Cookie;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,4 +33,5 @@ public class MemberController {
 		
 		return members;
 	}
+	
 }

@@ -6,16 +6,19 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import web.project.backend.orm.Member;
 import web.project.backend.security.CookieUtil;
 import web.project.backend.security.RedisUtil;
 import web.project.backend.security.jwt.JwtUtil;
+import web.project.backend.security.service.MyUserDetails;
 import web.project.backend.service.MemberService;
 import web.project.backend.util.message.APIMessage;
 
@@ -44,6 +47,7 @@ public class AuthController {
 					            HttpServletRequest req,
 					            HttpServletResponse res) {
 		
+		//memeberservie 계정 확인
 		Member member = (Member) message.getBody().getAny();
 		APIMessage<Cookie> response = new APIMessage<>("Token");
 		try {
@@ -61,4 +65,16 @@ public class AuthController {
             return response;
         }
 	}
+	
+	@PostMapping("/info")
+    @PreAuthorize("hasRole('USER')")
+    public APIMessage<?> getCurrentUser(MyUserDetails myUserDetails) {
+		System.out.println(myUserDetails);
+        //log.debug("REST request to get user : {}", CustomUserDetails.getEmail());
+		APIMessage<Member> response = new APIMessage<>("Member");
+		
+		Member member = memberService.findOne(myUserDetails.getUsername()).orElse(null);
+		response.getBody().setAny(member);
+        return response;
+    }
 }

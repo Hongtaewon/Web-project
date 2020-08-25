@@ -1,7 +1,9 @@
 import React from 'react';
 import styles from './content.scss';
 import classNames from 'classnames/bind';
-import {Sidenav,Search,Recent,Category,Article} from 'components/home'
+import {Search,Recent,Category,Article} from 'components/home';
+import SidenavContainer from 'container/home/SidenavContainer';
+
 const cx = classNames.bind(styles);
 
 
@@ -10,7 +12,7 @@ const content = () => {
     return (
         <div className={cx('container')}>
             <div className={cx('navside')}>
-                <Sidenav />
+                <SidenavContainer />
             </div>
             <div className={cx('contents')}>
                 <div className="search">

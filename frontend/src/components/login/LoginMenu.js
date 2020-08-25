@@ -12,25 +12,25 @@ const loginMenuitem = (
     </>
 );
 
-const accountMenuItem = (
+const accountMenuItem = (logout) => {
+    return (
     <>
         <Button variant="contained" color="primary">
             MyPage
         </Button>
-        <Button variant="contained" color="secondary">
+        <Button variant="contained" color="secondary" onClick={logout}>
             LogOut
         </Button>          
     </>
-);
+    )
+};
 
-const LoginMenu = ({isAuthenticated}) => {
-    
+const LoginMenu = ({isAuthenticated, onLogout}) => {
+
     return (
         <Fragment>
-            {isAuthenticated ? accountMenuItem : loginMenuitem},
-            <div>
-                {isAuthenticated}
-            </div>
+            {console.log(isAuthenticated)}
+            {isAuthenticated ? accountMenuItem(onLogout) : loginMenuitem}
         </Fragment>
 
     );

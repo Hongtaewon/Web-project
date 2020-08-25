@@ -1,5 +1,4 @@
 import axios from "axios";
-import APIMessage from "pages/blog/APIMessage";
 import {Storage} from 'api/storage';
 
 const API_BASE_URL = '';
@@ -30,8 +29,8 @@ export const deletePost = (id) => axios.post(`${API_BASE_URL}/blog/blog-post/${i
 );
 
 //Member 관련 API
-export const login = (APIMessage) => axios.post(`${API_BASE_URL}/blog/Auth/signIn`,{APIMessage});
-export const getMember = () => axios.post(`${API_BASE_URL}/Member/info`,{},
+export const login = (APIMessage) => axios.post(`${API_BASE_URL}/blog/Auth/signIn`,APIMessage);
+export const getMember = () => axios.post(`${API_BASE_URL}/blog/Auth/info`,{},
     {
         headers: {
         Authorization: getToken()

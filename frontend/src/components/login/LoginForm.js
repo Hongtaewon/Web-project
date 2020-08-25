@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
       const {handleLogin} = props;
       e.preventDefault();
       const {LoginID,password,remember} = e.target;
-      handleLogin(LoginID.value, password.value);
+      handleLogin(LoginID.value, password.value,remember);
     };
     
     return (
@@ -69,7 +69,7 @@ const useStyles = makeStyles((theme) => ({
               autoComplete="current-password"
             />
             <FormControlLabel
-              control={<Checkbox id="remember" color="primary"/>}
+              control={<Checkbox name="remember" value="true" color="primary"/>}
               label="Remember me"
             />
             <Button

@@ -11,9 +11,6 @@ export default function APIMessage(tableName,object,result,reason) {
         Body: {
             "Any":{
     
-            },
-            "innerMap": {
-
             }
         },
     

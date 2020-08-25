@@ -3,8 +3,6 @@ package web.project.backend.repository;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.stereotype.Repository;
-
 import web.project.backend.orm.Member;
 
 
