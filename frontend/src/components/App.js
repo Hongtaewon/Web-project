@@ -30,6 +30,7 @@ class App extends React.Component {
           <Route exact path="/" component={home} />
           <Route path="/blog/:id" component={blog_main} /> 
           <Route path="/login" component={LoginContainer} />
+          <Route path="/register" component={LoginContainer} />
           <Route component={NotFoundPage} />
         </Switch>
       </div>

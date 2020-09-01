@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import web.project.backend.orm.Member;
 import web.project.backend.security.CookieUtil;
+import web.project.backend.security.CurrentUser;
 import web.project.backend.security.RedisUtil;
 import web.project.backend.security.jwt.JwtUtil;
 import web.project.backend.security.service.MyUserDetails;
@@ -67,13 +69,15 @@ public class AuthController {
 	}
 	
 	@PostMapping("/info")
-    @PreAuthorize("hasRole('USER')")
-    public APIMessage<?> getCurrentUser(MyUserDetails myUserDetails) {
+    //@PreAuthorize("hasRole('USER')")
+    public APIMessage<?> getCurrentUser(@CurrentUser MyUserDetails myUserDetails) {
 		System.out.println(myUserDetails);
         //log.debug("REST request to get user : {}", CustomUserDetails.getEmail());
 		APIMessage<Member> response = new APIMessage<>("Member");
 		
-		Member member = memberService.findOne(myUserDetails.getUsername()).orElse(null);
+		Member member = memberService.findOne(myUserDetails.getUsername())
+				.orElseThrow(() ->
+                new UsernameNotFoundException("User not found with loginId : " + myUserDetails.getId()));
 		response.getBody().setAny(member);
         return response;
     }

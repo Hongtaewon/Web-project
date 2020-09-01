@@ -11,7 +11,7 @@ const composeEnhancers = devtools || compose;
 
 // preloadedState는 서버사이드 렌더링시 전달 받는 초기 상태
 const configure = (preloadedState) => createStore(reducers, preloadedState, composeEnhancers(
-  applyMiddleware(...middlewares,logger)
+  applyMiddleware(...middlewares)
 ));
 
 export default configure;

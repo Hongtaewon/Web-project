@@ -12,15 +12,17 @@ import java.util.Map;
 
 public class MyUserDetails implements UserDetails {
     private Long id;
+    private String loginid;
     private String name;
     private String email;
     private String password;
     private Collection<? extends GrantedAuthority> authorities;
     private Map<String, Object> attributes;
 
-    public MyUserDetails(Long id, String name, String email, String password,
+    public MyUserDetails(Long id,String loginid, String name, String email, String password,
                              Collection<? extends GrantedAuthority> authorities) {
         this.id = id;
+        this.loginid = loginid;
         this.name = name;
         this.email = email;
         this.password = password;
@@ -33,6 +35,7 @@ public class MyUserDetails implements UserDetails {
 
         return new MyUserDetails(
         		member.getIdx(),
+        		member.getLoginid(),
         		member.getName(),
         		member.getEmail(),
         		member.getPassword(),
@@ -54,14 +57,14 @@ public class MyUserDetails implements UserDetails {
         return email;
     }
 
+	@Override
+	public String getUsername() {
+		return loginid;
+	}
+
     @Override
     public String getPassword() {
         return password;
-    }
-
-    @Override
-    public String getUsername() {
-        return email;
     }
 
     @Override

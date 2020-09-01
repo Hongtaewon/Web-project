@@ -29,7 +29,6 @@ const LoginMenu = ({isAuthenticated, onLogout}) => {
 
     return (
         <Fragment>
-            {console.log(isAuthenticated)}
             {isAuthenticated ? accountMenuItem(onLogout) : loginMenuitem}
         </Fragment>
 
