@@ -1,5 +1,6 @@
 package web.project.backend.security.jwt;
 
+import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.util.Date;
 import java.util.Map;
@@ -19,7 +20,7 @@ import web.project.backend.orm.Member;
 public class JwtUtil {
 
     public final static long TOKEN_VALIDATION_SECOND = 1000L * 60 * 30;
-    public final static long REFRESH_TOKEN_VALIDATION_SECOND = 1000L * 60 * 60;
+    public final static long REFRESH_TOKEN_VALIDATION_SECOND = 1000L * 60 * 60 * 24;
 
     final static public String ACCESS_TOKEN_NAME = "accessToken";
     final static public String REFRESH_TOKEN_NAME = "refreshToken";
@@ -28,7 +29,8 @@ public class JwtUtil {
     private String SECRET_KEY;
 
     private Key getSigningKey(String secretKey) {
-        return Keys.hmacShaKeyFor(secretKey.getBytes());
+    	byte[] keyBytes = secretKey.getBytes(StandardCharsets.UTF_8);
+        return Keys.hmacShaKeyFor(keyBytes);
     }
 
     public Claims extractAllClaims(String token) throws ExpiredJwtException {
@@ -60,8 +62,6 @@ public class JwtUtil {
 
         Claims claims = Jwts.claims();
         claims.put("loginid", member.getLoginid());
-        claims.put("name", member.getName());
-        claims.put("nick_name", member.getNick_name());
         claims.put("role", member.getRole());
         
         String jwt = Jwts.builder()
@@ -75,7 +75,6 @@ public class JwtUtil {
         return jwt;
     }
 
-    // JwtAuthFilter 구현해야함.
     public Boolean validateToken(String token, UserDetails userDetails) {
         final String username = getUsername(token);
 

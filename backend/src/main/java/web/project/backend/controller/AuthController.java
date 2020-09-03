@@ -1,12 +1,16 @@
 package web.project.backend.controller;
 
+import java.util.Collections;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -38,41 +42,57 @@ public class AuthController {
 	private RedisUtil redisUtil;
 	
 	@PostMapping("/signUp")
-	public APIMessage<?> signUp(@RequestBody APIMessage<Member> message) {
+	public ResponseEntity<?> signUp(@RequestBody APIMessage<Member> message) {
 		
-		APIMessage<Member> response = memberService.signUp(message);
+		try{
+			if(!memberService.signUp(message))
+			{
+				throw new Exception("이미 가입된 아이디입니다.");
+			}
+			return ResponseEntity.ok("가입완료");
+		} catch (Exception e) {
+			return new ResponseEntity<>(Collections.singletonMap("SignInErrorException",
+                    e.getLocalizedMessage()), HttpStatus.CONFLICT);
+		}
 		
-		return response;
 	}
 	@PostMapping("/signIn")
 	public APIMessage<?> signIn(@RequestBody APIMessage<Member> message,
 					            HttpServletRequest req,
-					            HttpServletResponse res) {
+					            HttpServletResponse res) throws AuthenticationException {
 		
-		//memeberservie 계정 확인
-		Member member = (Member) message.getBody().getAny();
 		APIMessage<Cookie> response = new APIMessage<>("Token");
-		try {
-			
-			final String token = jwtUtil.generateToken(member);
-            final String refreshJwt = jwtUtil.generateRefreshToken(member);
-            Cookie accessToken = cookieUtil.createCookie(JwtUtil.ACCESS_TOKEN_NAME, token);
-            Cookie refreshToken = cookieUtil.createCookie(JwtUtil.REFRESH_TOKEN_NAME, refreshJwt);
-            redisUtil.setDataExpire(refreshJwt, member.getLoginid(), JwtUtil.REFRESH_TOKEN_VALIDATION_SECOND);
-            res.addCookie(accessToken);
-            res.addCookie(refreshToken);
+		
+		if(memberService.signIn(message))
+		{
+			try {
+				Member member = (Member) message.getBody().getAny();
+				final String token = jwtUtil.generateToken(member);
+	            final String refreshJwt = jwtUtil.generateRefreshToken(member);
+	            Cookie accessToken = cookieUtil.createCookie(JwtUtil.ACCESS_TOKEN_NAME, token);
+	            Cookie refreshToken = cookieUtil.createCookie(JwtUtil.REFRESH_TOKEN_NAME, refreshJwt);
+	            redisUtil.setDataExpire(refreshJwt, member.getLoginid(), JwtUtil.REFRESH_TOKEN_VALIDATION_SECOND);
+	            res.addCookie(accessToken);
+	            res.addCookie(refreshToken);
+	            response.getReturn().setReason(HttpStatus.OK.toString());
+	            return response;
+			} catch (Exception e) {
+	            response.getReturn().setReason(HttpStatus.UNAUTHORIZED.toString());
+	            return response;
+	        }
+		}
+		else
+		{
+			response.getReturn().setReason(HttpStatus.UNAUTHORIZED.toString());
             return response;
-		} catch (Exception e) {
-            response.getReturn().setReason(HttpStatus.UNAUTHORIZED.toString());
-            return response;
-        }
+		}
 	}
 	
 	@PostMapping("/info")
     //@PreAuthorize("hasRole('USER')")
     public APIMessage<?> getCurrentUser(@CurrentUser MyUserDetails myUserDetails) {
 		System.out.println(myUserDetails);
-        //log.debug("REST request to get user : {}", CustomUserDetails.getEmail());
+        //log.debug("REST request to get user : {}", MyUserDetails.getEmail());
 		APIMessage<Member> response = new APIMessage<>("Member");
 		
 		Member member = memberService.findOne(myUserDetails.getUsername())

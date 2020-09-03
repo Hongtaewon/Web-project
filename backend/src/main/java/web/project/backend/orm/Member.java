@@ -7,6 +7,8 @@ import java.util.Map;
 
 import javax.persistence.*;
 
+import org.hibernate.annotations.ColumnDefault;
+
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -43,7 +45,7 @@ public class Member extends BaseEntity{
 	private LocalDateTime last_login_try_Date; // 마지막으로 로그인을 시도한 시간
 	@Column
 	private int is_lock; // 로그인 제한 여부
-	@Column
+	@ColumnDefault("USER")
 	private String role; // 권한
 	
 }

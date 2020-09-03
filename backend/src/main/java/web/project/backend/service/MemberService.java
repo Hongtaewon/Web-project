@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,6 +20,9 @@ public class MemberService {
 
 	@Autowired
 	private MemberRepository memberRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 	
 	private boolean validateDubplicateMember(Member member) {
 		return memberRepository.findByloginid(member.getLoginid()).isPresent();
@@ -33,7 +37,7 @@ public class MemberService {
 			return false;
 		else
 		{
-			if(member.getPassword().equals(m.getPassword()))
+			if(passwordEncoder.matches(member.getPassword(), m.getPassword()))
 				return true;
 			else
 				return false;
@@ -43,42 +47,39 @@ public class MemberService {
 	/*
 	 * 회원 가입
 	 * */
-	public APIMessage<Member> signUp(APIMessage<Member> message) {
+	public boolean signUp(APIMessage<Member> message) {
 		//같은 이름이 있는 중복 회원 x
 		Member member = (Member) message.getBody().getAny();
 		
 		if(validateDubplicateMember(member))
 		{
-			message.getReturn().setResult(HttpStatus.ACCEPTED.toString());
-			message.getReturn().setReason("아이디가 중복됩니다.");
+			// error log
+			return false;
 		}
 		else
 		{
-			memberRepository.save(member);
-			message.getReturn().setResult(HttpStatus.OK.toString());
+			Member saveMember = new Member(member.getLoginid(), 
+										member.getName(), 
+										member.getNick_name(), 
+										passwordEncoder.encode(member.getPassword()),
+										member.getEmail());
+
+			memberRepository.save(saveMember);
 		}
 		
-		return message;
+		return true;
 	}
 	
 	/*
 	 * 로그인
 	 * */
-	public APIMessage<Member> signIn(APIMessage<Member> message) {
+	public boolean signIn(APIMessage<Member> message) {
 		
 		Member member = (Member) message.getBody().getAny();
 		if(validateLoginMemberInfo(member))
-		{
-			message.getReturn().setResult(HttpStatus.OK.toString());
-			//토큰 발행
-		}
+			return true;
 		else
-		{
-			message.getReturn().setResult(HttpStatus.ACCEPTED.toString());
-			message.getReturn().setReason("아이디 또는 비밀번호가 틀렸습니다.");
-		}
-		
-		return message;
+			return false;
 	}
 	
 	/*
