@@ -6,6 +6,8 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import lombok.extern.log4j.Log4j2;
 import web.project.backend.orm.Member;
 import web.project.backend.security.CookieUtil;
 import web.project.backend.security.CurrentUser;
@@ -30,8 +33,9 @@ import web.project.backend.util.message.APIMessage;
 
 @RestController
 @RequestMapping("blog/Auth")
+@Log4j2
 public class AuthController {
-
+	
 	@Autowired
 	private MemberService memberService;
 	@Autowired

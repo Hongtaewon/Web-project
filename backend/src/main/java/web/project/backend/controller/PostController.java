@@ -11,12 +11,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import lombok.extern.log4j.Log4j2;
 import web.project.backend.orm.Blog_post;
 import web.project.backend.service.PostService;
 import web.project.backend.util.message.APIMessage;
 
 @RestController
 @RequestMapping("blog/blog-post")
+@Log4j2
 public class PostController {
 
 	@Autowired

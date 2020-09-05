@@ -21,7 +21,25 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+			<!-- log4j2 사용을 위해  logback모듈에 대한 의존성 제거-->
+			<exclusions>
+	        	<exclusion>
+	            	<groupId>org.springframework.boot</groupId>
+	            	<artifactId>spring-boot-starter-logging</artifactId>
+	        	</exclusion>
+	    	</exclusions>
+			
 		</dependency>
+		
+		
+		<dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-log4j2</artifactId>
+		</dependency>
+
+
+
+		
 		<dependency>
 		    <groupId>org.springframework.boot</groupId>
 		    <artifactId>spring-boot-starter-data-jpa</artifactId>
