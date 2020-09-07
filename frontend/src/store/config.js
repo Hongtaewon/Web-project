@@ -1,7 +1,7 @@
 import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
 import penderMiddleware from 'redux-pender';
 import * as modules from './modules';
-import logger from 'redux-logger';
+//import logger from 'redux-logger';
 
 const reducers = combineReducers(modules);
 const middlewares = [penderMiddleware()];

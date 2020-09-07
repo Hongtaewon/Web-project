@@ -6,7 +6,7 @@ const loginMenuitem = (
         <Button variant="contained" color="primary" href="/login">
             SignIn
         </Button>
-        <Button variant="contained" color="secondary" href="/register">
+        <Button variant="contained" color="secondary" href="/signup">
             SignUp
         </Button>  
     </>
@@ -29,6 +29,7 @@ const LoginMenu = ({isAuthenticated, onLogout}) => {
 
     return (
         <Fragment>
+            {console.log(isAuthenticated)}
             {isAuthenticated ? accountMenuItem(onLogout) : loginMenuitem}
         </Fragment>
 

@@ -3,22 +3,24 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from "redux";
 import { Redirect } from 'react-router-dom';
 import * as authActions from "store/modules/auth";
-import LoginForm from 'components/login/LoginForm';
+import RegisterForm from 'components/register/RegisterForm';
 import APIMessage from 'pages/blog/APIMessage'
-class LoginContainer extends Component {
+class RegisterContainer extends Component {
 
 
-  handleLogin = async (username, password,remember) => {
+  handleResiger = async (loginid,name, password,email) => {
     const { AuthActions } = this.props;
     const member = {
-      "loginid":username,
-      "password":password
+      "loginid":loginid,
+      "name":name,
+      "password":password,
+      "email":email
     }
 
     var message = new APIMessage("Member",member,"","");
 
     try {
-      await AuthActions.login(message);
+      await AuthActions.register(message);
     } catch (e) {
       console.log("error log :" + e);
     }
@@ -39,19 +41,17 @@ class LoginContainer extends Component {
     }
 
     return (
-      <LoginForm handleLogin={this.handleLogin.bind(this)}/>
+      <RegisterForm handleResiger={this.handleResiger.bind(this)}/>
     );
   }
 }
 
 export default connect(
   state => ({
-    loading: state.pender.pending["auth/LOGIN"],
-    loginError: state.pender.failure["auth/LOGIN"],
     isAuthenticated: state.auth.get("isAuthenticated"),
   }),
   dispatch => ({
     AuthActions: bindActionCreators(authActions, dispatch)
   })
-)(LoginContainer);
+)(RegisterContainer);
 

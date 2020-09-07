@@ -11,11 +11,13 @@ const LOGIN = 'auth/LOGIN'
 //const SOCIAL_LOGIN = 'auth/SOCIAL_LOGIN'
 const LOGOUT = 'auth/LOGOUT'
 const GET_USER = 'auth/GET_USER';
+const REGISTER = 'auth/REGISTER';
 
 export const login = createAction(LOGIN, api.login);
 //export const socialLogin = createAction(SOCIAL_LOGIN);
-export const logout = createAction(LOGOUT);
+export const logout = createAction(LOGOUT, api.logout);
 export const getUser = createAction(GET_USER, api.getMember);
+export const register = createAction(REGISTER, api.register);
 
 const initialState = Map({
   isAuthenticated: false,
@@ -52,8 +54,8 @@ export default handleActions({
     type: LOGIN,
     onSuccess: (state, action) => {
       console.log("LOGIN onSuccess")
-      const { data: content } = action.payload;
-      const bearerToken = content.token;
+      const { headers: content } = action.payload;
+      const bearerToken = content.authorization;
       if (bearerToken && bearerToken.slice(0, 7) === 'Bearer ') {
         const jwt = bearerToken.slice(7, bearerToken.length);
         const rememberMe = false;
@@ -68,6 +70,50 @@ export default handleActions({
     onFailure: (state, action) => {
       console.log("LOGIN onFailure")
       return state.set('isAuthenticated', false);
+    }
+  }),
+  ...pender({
+    type: LOGOUT,
+    onSuccess: (state, action) => {
+      console.log("LOGOUT action")
+  
+      if (Storage.local.get("__AUTH__")) {
+        Storage.local.remove("__AUTH__");
+      }
+      if (Storage.session.get("__AUTH__")) {
+        Storage.session.remove("__AUTH__");
+      }
+  
+      return state.set('isAuthenticated', false)
+        .set('loginSuccess', false);
+    },
+    onFailure: (state, action) => {
+      console.log("incorrect LOGOUT action")
+  
+      if (Storage.local.get("__AUTH__")) {
+        Storage.local.remove("__AUTH__");
+      }
+      if (Storage.session.get("__AUTH__")) {
+        Storage.session.remove("__AUTH__");
+      }
+  
+      return state.set('isAuthenticated', false)
+        .set('loginSuccess', false);
+    },
+  }),
+  ...pender({
+    type: REGISTER,
+    onSuccess: (state, action) => {
+      console.log("REGISTER onSuccess")
+      const { data: content } = action.payload;
+
+      return ;
+    },
+    onFailure: (state, action) => {
+      console.log("REGISTER onFailure")
+      
+      const { data: content } = action.payload;
+      return ;
     }
   }),
   ...pender({

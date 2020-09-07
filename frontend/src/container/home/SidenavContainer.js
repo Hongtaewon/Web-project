@@ -9,15 +9,19 @@ class SidenavContainer extends Component {
 
 
   componentDidUpdate() {
-    console.log(this.props.isAuthenticated);
   
   }
 
   
 
-  handleLogout = () => {
+  handleLogout = async () => {
     const { AuthActions } = this.props;
-    AuthActions.logout();   
+
+    try {
+      await AuthActions.logout();
+    } catch (e) {
+      console.log("error log :" + e);
+    }
   }
 
 
@@ -33,6 +37,9 @@ class SidenavContainer extends Component {
 
 export default connect(
   state => ({
+    
+    loading: state.pender.pending["auth/LOGOUT"],
+    logOUtError: state.pender.failure["auth/LOGOUT"],
     isAuthenticated: state.auth.get("isAuthenticated"),
   }),
   dispatch => ({

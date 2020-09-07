@@ -30,6 +30,13 @@ export const deletePost = (id) => axios.post(`${API_BASE_URL}/blog/blog-post/${i
 
 //Member 관련 API
 export const login = (APIMessage) => axios.post(`${API_BASE_URL}/blog/Auth/signIn`,APIMessage);
+export const logout = () => axios.post(`${API_BASE_URL}/blog/Auth/logout`,{},
+    {
+        headers: {
+        Authorization: getToken()
+        }
+    }
+);
 export const getMember = () => axios.post(`${API_BASE_URL}/blog/Auth/info`,{},
     {
         headers: {
@@ -51,6 +58,7 @@ export const deleteMember = (id) => axios.post(`${API_BASE_URL}/member/info`,{},
         }
     }
 );
+export const register = (APIMessage) => axios.post(`${API_BASE_URL}/blog/Auth/register`,APIMessage);
 
 //blog 관련 API
 export const getBlog = (id) => axios.get(`${API_BASE_URL}/blog/info/${id}`);
