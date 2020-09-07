@@ -10,6 +10,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.AuthenticationException;
@@ -44,7 +45,9 @@ public class AuthController {
 	private CookieUtil cookieUtil;
 	@Autowired
 	private RedisUtil redisUtil;
-	
+
+    private final String AUTHORIZATION_HEADER = "Authorization";
+    
 	@PostMapping("/signUp")
 	public ResponseEntity<?> signUp(@RequestBody APIMessage<Member> message) {
 		
@@ -71,12 +74,11 @@ public class AuthController {
 		{
 			try {
 				Member member = (Member) message.getBody().getAny();
-				final String token = jwtUtil.generateToken(member);
+				final String token = "Bearer " + jwtUtil.generateToken(member);
 	            final String refreshJwt = jwtUtil.generateRefreshToken(member);
-	            Cookie accessToken = cookieUtil.createCookie(JwtUtil.ACCESS_TOKEN_NAME, token);
 	            Cookie refreshToken = cookieUtil.createCookie(JwtUtil.REFRESH_TOKEN_NAME, refreshJwt);
 	            redisUtil.setDataExpire(refreshJwt, member.getLoginid(), JwtUtil.REFRESH_TOKEN_VALIDATION_SECOND);
-	            res.addCookie(accessToken);
+	            res.addHeader(AUTHORIZATION_HEADER, token);
 	            res.addCookie(refreshToken);
 	            response.getReturn().setReason(HttpStatus.OK.toString());
 	            return response;
@@ -105,4 +107,19 @@ public class AuthController {
 		response.getBody().setAny(member);
         return response;
     }
+	
+	@PostMapping("/logout")
+	public ResponseEntity<?> MemberLogout(HttpServletRequest req, HttpServletResponse res) throws AuthenticationException {
+		
+		try {
+			final Cookie jwtToken = cookieUtil.getCookie(req,JwtUtil.REFRESH_TOKEN_NAME);
+			String jwt = jwtToken.getValue();
+			redisUtil.deleteData(jwt);
+			
+			return ResponseEntity.ok("로그아웃 완료");
+		} catch (Exception e) {
+			return new ResponseEntity<>(Collections.singletonMap("LogoutErrorException",
+                    e.getLocalizedMessage()), HttpStatus.BAD_REQUEST);
+        }
+	}
 }
