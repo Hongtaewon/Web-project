@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import lombok.extern.log4j.Log4j2;
-import web.project.backend.orm.Member;
+import web.project.backend.entity.Member;
 
 @Service
 @Log4j2

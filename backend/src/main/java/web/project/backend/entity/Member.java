@@ -1,4 +1,4 @@
-package web.project.backend.orm;
+package web.project.backend.entity;
 
 
 import java.time.LocalDateTime;
@@ -28,9 +28,6 @@ public class Member extends BaseEntity{
 	@Column(nullable = false)
 	@NonNull
 	private String name; // 사용자의 이름
-	@Column(nullable = false)
-	@NonNull
-	private String nick_name; //서비스를 이용할 때 보여지는 이름
 	@Column(nullable = false)
 	@NonNull
 	private String password; // 패스워드 bcrypt를 사용할 예정

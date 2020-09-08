@@ -58,7 +58,7 @@ export const deleteMember = (id) => axios.post(`${API_BASE_URL}/member/info`,{},
         }
     }
 );
-export const register = (APIMessage) => axios.post(`${API_BASE_URL}/blog/Auth/register`,APIMessage);
+export const register = (APIMessage) => axios.post(`${API_BASE_URL}/blog/Auth/signUp`,APIMessage);
 
 //blog 관련 API
 export const getBlog = (id) => axios.get(`${API_BASE_URL}/blog/info/${id}`);

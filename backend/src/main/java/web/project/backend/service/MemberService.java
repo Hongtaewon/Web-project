@@ -4,12 +4,13 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import web.project.backend.orm.Member;
+import web.project.backend.Exception.ConflictException;
+import web.project.backend.entity.Member;
+import web.project.backend.repository.JpaMemberRepository;
 import web.project.backend.repository.MemberRepository;
 import web.project.backend.util.message.APIMessage;
 
@@ -19,13 +20,17 @@ import web.project.backend.util.message.APIMessage;
 public class MemberService {
 
 	@Autowired
-	private MemberRepository memberRepository;
+	private JpaMemberRepository memberRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
 	
-	private boolean validateDubplicateMember(Member member) {
+	private boolean validateDubplicateLoginId(Member member) {
 		return memberRepository.findByloginid(member.getLoginid()).isPresent();
+	}
+	
+	private boolean validateDubplicateEmail(Member member) {
+		return memberRepository.findByemail(member.getEmail()).isPresent();
 	}
 	
 	private boolean validateLoginMemberInfo(Member member) {
@@ -47,20 +52,22 @@ public class MemberService {
 	/*
 	 * 회원 가입
 	 * */
-	public boolean signUp(APIMessage<Member> message) {
+	public boolean signUp(APIMessage<Member> message) throws Exception {
 		//같은 이름이 있는 중복 회원 x
 		Member member = (Member) message.getBody().getAny();
 		
-		if(validateDubplicateMember(member))
+		if(validateDubplicateLoginId(member))
 		{
-			// error log
-			return false;
+			throw new ConflictException("아이디", member.getLoginid());
 		}
 		else
 		{
+			if(validateDubplicateEmail(member))
+			{
+				throw new ConflictException("이메일", member.getEmail());
+			}
 			Member saveMember = new Member(member.getLoginid(), 
 										member.getName(), 
-										member.getNick_name(), 
 										passwordEncoder.encode(member.getPassword()),
 										member.getEmail());
 

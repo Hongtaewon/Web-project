@@ -23,6 +23,7 @@ const initialState = Map({
   isAuthenticated: false,
   loginSuccess: false,
   loginError: false,
+  ErrorField: '',
   currentUser: Map({})
 });
 
@@ -112,8 +113,8 @@ export default handleActions({
     onFailure: (state, action) => {
       console.log("REGISTER onFailure")
       
-      const { data: content } = action.payload;
-      return ;
+      const { data : content } = action.payload.response;
+      return state.set('ErrorField',content);
     }
   }),
   ...pender({

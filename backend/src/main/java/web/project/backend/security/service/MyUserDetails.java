@@ -1,9 +1,10 @@
 package web.project.backend.security.service;
 
-import web.project.backend.orm.Member;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import web.project.backend.entity.Member;
 
 import java.util.Collection;
 import java.util.Collections;

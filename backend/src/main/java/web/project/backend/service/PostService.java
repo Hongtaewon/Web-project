@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import web.project.backend.orm.Blog_post;
-import web.project.backend.orm.Member;
+import web.project.backend.entity.Blog_post;
+import web.project.backend.entity.Member;
 import web.project.backend.repository.JpaBlogPostRepository;
 import web.project.backend.repository.MemberRepository;
 

@@ -1,4 +1,4 @@
-package web.project.backend.orm;
+package web.project.backend.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

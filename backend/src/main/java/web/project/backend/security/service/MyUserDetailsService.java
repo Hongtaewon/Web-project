@@ -10,7 +10,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import web.project.backend.orm.Member;
+import web.project.backend.entity.Member;
 import web.project.backend.repository.MemberRepository;
 
 @Service

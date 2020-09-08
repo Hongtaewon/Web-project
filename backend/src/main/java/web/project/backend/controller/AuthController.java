@@ -23,7 +23,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.extern.log4j.Log4j2;
-import web.project.backend.orm.Member;
+import web.project.backend.Exception.ConflictException;
+import web.project.backend.entity.Member;
 import web.project.backend.security.CookieUtil;
 import web.project.backend.security.CurrentUser;
 import web.project.backend.security.RedisUtil;
@@ -54,12 +55,16 @@ public class AuthController {
 		try{
 			if(!memberService.signUp(message))
 			{
-				throw new Exception("이미 가입된 아이디입니다.");
 			}
 			return ResponseEntity.ok("가입완료");
-		} catch (Exception e) {
-			return new ResponseEntity<>(Collections.singletonMap("SignInErrorException",
-                    e.getLocalizedMessage()), HttpStatus.CONFLICT);
+		} catch (ConflictException ce) {
+			log.error(ce.getLocalizedMessage());
+			return new ResponseEntity<>(ce.getFieldName(), HttpStatus.CONFLICT);
+		}
+		catch (Exception e) {
+			log.error(e.getLocalizedMessage());
+			return new ResponseEntity<>(Collections.singletonMap("SignUpErrorException",
+                    e.getLocalizedMessage()), HttpStatus.BAD_REQUEST);
 		}
 		
 	}
