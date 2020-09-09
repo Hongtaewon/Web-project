@@ -11,7 +11,8 @@ class RegisterContainer extends Component {
 
 
   state = {
-    open : false,
+    open: false,
+    isSuccess: false,
   }
 
   handleResiger = async (loginid,name, password,email) => {
@@ -27,8 +28,17 @@ class RegisterContainer extends Component {
 
     try {
       await AuthActions.register(message);
+      this.handleOpen();
+
+      setTimeout(() => {
+        this.setState({
+          isSuccess: true,
+        })
+      }, 2000);
+      
     } catch (e) {
       console.log("error log :" + e);
+
       this.handleOpen();
     }
   };
@@ -42,16 +52,15 @@ class RegisterContainer extends Component {
   };
 
   componentDidUpdate() {
-
   }
 
   render() {
 
-    const { location, Registersuccess } = this.props;
+    const { location } = this.props;
     const { from } = location.state || { from: { pathname: '/', search: location.search } };
-    var {RegisterError, ErrorField} = this.props;
+    var {ResponseMessage} = this.props;
 
-    if (Registersuccess) {
+    if (this.state.isSuccess) {
       return <Redirect to={from} />;
     }
 
@@ -66,7 +75,7 @@ class RegisterContainer extends Component {
             aria-describedby="alert-dialog-description"
           >   
           <DialogTitle id="alert-dialog-title">
-            {ErrorField+"가 이미 사용중입니다."}
+            {ResponseMessage}
           </DialogTitle>
           <DialogActions>
             <Button onClick={this.handleClose} color="primary" autoFocus>
@@ -74,7 +83,7 @@ class RegisterContainer extends Component {
             </Button>
           </DialogActions>
         </Dialog>
-        <RegisterForm handleResiger={this.handleResiger.bind(this)} dRegisterError={RegisterError} ErrorField={ErrorField}/>
+        <RegisterForm handleResiger={this.handleResiger.bind(this)} />
       </div>
     );
   }
@@ -83,8 +92,7 @@ class RegisterContainer extends Component {
 export default connect(
   state => ({
     Registersuccess: state.pender.success["auth/REGISTER"],
-    RegisterError: state.pender.failure["auth/REGISTER"],
-    ErrorField: state.auth.get("ErrorField"),
+    ResponseMessage: state.auth.get("ResponseMessage"),
   }),
   dispatch => ({
     AuthActions: bindActionCreators(authActions, dispatch)

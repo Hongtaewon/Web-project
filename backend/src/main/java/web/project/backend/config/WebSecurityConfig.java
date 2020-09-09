@@ -104,6 +104,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .antMatchers(HttpMethod.GET, "/blog/blog-post/**").permitAll()
             .antMatchers("/", "/error",
                     "/blog/Auth/signIn", "/blog/Auth/signUp",
+                    "/blog/**", //테스트를 위한 임시
                     "/v2/**", "/swagger-ui.html", "/swagger-resources/**")
             .permitAll()
             .anyRequest()

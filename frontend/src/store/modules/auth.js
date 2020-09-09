@@ -23,7 +23,7 @@ const initialState = Map({
   isAuthenticated: false,
   loginSuccess: false,
   loginError: false,
-  ErrorField: '',
+  ResponseMessage: '',
   currentUser: Map({})
 });
 
@@ -106,15 +106,20 @@ export default handleActions({
     type: REGISTER,
     onSuccess: (state, action) => {
       console.log("REGISTER onSuccess")
-      const { data: content } = action.payload;
 
-      return ;
+      return state.set('ResponseMessage',"회원 가입이 완료되었습니다.");;
     },
     onFailure: (state, action) => {
       console.log("REGISTER onFailure")
       
-      const { data : content } = action.payload.response;
-      return state.set('ErrorField',content);
+      const content = action.payload.response;
+
+      if(content.status === 500)
+      {
+        return state.set('ResponseMessage',"서버 에러");
+      }
+
+      return state.set('ResponseMessage',content.data+"가 이미 사용중입니다.");
     }
   }),
   ...pender({

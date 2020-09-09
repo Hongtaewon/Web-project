@@ -3,7 +3,7 @@ import {
   Route,
   Switch,
 } from 'react-router-dom';
-import {home,NotFoundPage,blog_main} from 'pages';
+import {HomePage,NotFoundPage,Blog_MainPage} from 'pages';
 import LoginContainer from 'container/LoginContainer';
 import RegisterContainer from 'container/RegisterContainer';
 import * as authActions from "store/modules/auth";
@@ -31,8 +31,8 @@ class App extends React.Component {
         {/*<Route path="/register" component={RegisterContainer} />*/}
 
         <Switch>
-          <Route exact path="/" component={home} />
-          <Route path="/blog/:id" component={blog_main} /> 
+          <Route exact path="/" component={HomePage} />
+          <Route path="/blog/:id" component={Blog_MainPage} /> 
           <Route path="/login" component={LoginContainer} />
           <Route path="/signup" component={RegisterContainer} />
           <Route component={NotFoundPage} />

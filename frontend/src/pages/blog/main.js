@@ -1,11 +1,19 @@
 import React from 'react';
-import {Header, Content} from 'components/blog';
+import {PostListPage, PostPage, EditorPage, NotFoundPage } from 'pages';
+import {
+    Route,
+    Switch,
+  } from 'react-router-dom';
 
 const main = () => {
     return (
     <div>
-        <Header />
-        <Content />
+        <Switch>
+          <Route exact path="/blog/:id" component={PostListPage} /> 
+          <Route path="/blog/:id/posts/:id" component={PostPage} /> 
+          <Route path="/blog/:id/postwrite" component={EditorPage} />
+          <Route component={NotFoundPage} />
+        </Switch>
     </div>
 
 
