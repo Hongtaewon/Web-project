@@ -1,15 +1,14 @@
 import React from "react";
-import {Header, PostEditor} from 'components/blog';
+import {Header, BlogTemplate} from 'components/blog';
+import EditorContainer from 'container/blog/EditorContainer'
 
-const EditorPage = () => {
+const EditorPage = ({match}) => {
+    const { id } = match.params;
     return (
-    <div>
-        <Header />
-        <PostEditor />
-    </div>
-
-
+      <BlogTemplate header={<Header/>}>
+        <EditorContainer id={id}/>
+      </BlogTemplate>
     );
-};
-
-export default EditorPage;
+  };
+  
+  export default EditorPage;

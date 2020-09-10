@@ -1,5 +1,4 @@
-﻿
-# Web-project
+﻿# Web-project
 
 ## Web-project Blog
 
@@ -16,5 +15,9 @@
 2. Material-UI
 3. Toast UI 
 
-### TodoList
+## TodoList
 [TodoList](./Todo.md)
+
+## Update
+please check the update details from the link below.
+[Update](./Update.md)

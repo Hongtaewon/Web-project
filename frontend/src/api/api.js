@@ -6,7 +6,7 @@ const API_BASE_URL = '';
 //Post 관련 API
 export const getPost = (postId) => axios.get(`${API_BASE_URL}/blog/blog-post/${postId}`);
 export const getPosts = (page,size) => axios.get(`${API_BASE_URL}/blog/blog-post?page={${page}&size=${size}}`);
-export const writePost = (APIMessage) => axios.post(`${API_BASE_URL}/blog/blog-post`, {APIMessage},
+export const writePost = (title, content) => axios.post(`${API_BASE_URL}/blog/postwrite`, {title,content},
     {
         headers: {
         Authorization: getToken()

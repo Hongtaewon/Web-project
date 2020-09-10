@@ -96,15 +96,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	                "/**/*.gif",
 	                "/**/*.svg",
 	                "/**/*.jpg",
+	                "/**/*.jpeg",
 	                "/**/*.html",
 	                "/**/*.css",
 	                "/**/*.js")
 	        .permitAll()
             .antMatchers(HttpMethod.GET, "/blog/member/**").permitAll()
-            .antMatchers(HttpMethod.GET, "/blog/blog-post/**").permitAll()
+            .antMatchers(HttpMethod.GET, "/blog/**").permitAll()
             .antMatchers("/", "/error",
                     "/blog/Auth/signIn", "/blog/Auth/signUp",
-                    "/blog/**", //테스트를 위한 임시
+                    "/blog/postwrite", //테스트를 위한 임시
                     "/v2/**", "/swagger-ui.html", "/swagger-resources/**")
             .permitAll()
             .anyRequest()

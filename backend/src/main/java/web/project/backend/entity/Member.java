@@ -2,15 +2,12 @@ package web.project.backend.entity;
 
 
 import java.time.LocalDateTime;
-import java.util.LinkedHashMap;
-import java.util.Map;
 
 import javax.persistence.*;
 
 import org.hibernate.annotations.ColumnDefault;
 
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;

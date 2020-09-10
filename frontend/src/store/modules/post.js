@@ -6,7 +6,7 @@ import { pender } from 'redux-pender';
 import * as api from 'api/api';
 
 //action types
-/*const GET_POST_LIST = 'post/GET_POST_LIST';
+const GET_POST_LIST = 'post/GET_POST_LIST';
 const GET_POST = 'post/GET_POST';
 const WRITE_POST = 'post/WRITE_POST';
 const DELETE_POST = 'post/DELETE_POST';
@@ -16,10 +16,10 @@ const WRITE_COMMENT = 'post/WRITE_COMMENT';
 export const getPostList = createAction(GET_POST_LIST, api.getPosts);
 export const getPost = createAction(GET_POST, api.getPost);
 export const writePost = createAction(WRITE_POST, api.writePost);
-export const editPost = createAction(WRITE_POST, api.editPost);
+export const editPost = createAction(WRITE_POST, api.writePost);
 export const deletePost = createAction(DELETE_POST, api.deletePost);
-export const getCommentList = createAction(GET_COMMENT_LIST, api.getComments);
-export const writeComment = createAction(WRITE_COMMENT, api.writeComment);
+//export const getCommentList = createAction(GET_COMMENT_LIST, api.getComments);
+//export const writeComment = createAction(WRITE_COMMENT, api.writeComment);
 
 const initialState = Map({
   posts: List(),
@@ -111,4 +111,4 @@ export default handleActions({
       return state;
     }
   })
-}, initialState)*/
+}, initialState)
