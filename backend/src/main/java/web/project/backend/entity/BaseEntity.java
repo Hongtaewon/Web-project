@@ -31,7 +31,7 @@ public abstract class BaseEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long idx;
 	@CreatedDate
-	private LocalDateTime CreatedDate;
+	private LocalDateTime created_date;
 	@LastModifiedDate
-	private LocalDateTime ModifiedDate;
+	private LocalDateTime modified_date;
 }
