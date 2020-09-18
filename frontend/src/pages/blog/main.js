@@ -10,7 +10,7 @@ const main = () => {
     <div>
         <Switch>
           <Route exact path="/blog/:id" component={PostListPage} /> 
-          <Route path="/blog/:id/posts/:id" component={PostPage} /> 
+          <Route path="/blog/:id/post/:postid" component={PostPage} /> 
           <Route path="/blog/:id/postwrite" component={EditorPage} />
           <Route component={NotFoundPage} />
         </Switch>

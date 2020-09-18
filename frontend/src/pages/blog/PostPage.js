@@ -1,15 +1,14 @@
 import React from "react";
-import {Header, Content} from 'components/home';
+import {Header, BlogTemplate} from 'components/blog';
+import PostContainer from 'container/blog/PostContainer'
 
-const PostPage = () => {
+const PostPage = ({match}) => {
+    const { postid } = match.params;
     return (
-    <div>
-        <Header />
-        <Content />
-    </div>
-
-
+      <BlogTemplate header={<Header/>}>
+        <PostContainer id={postid}/>
+      </BlogTemplate>
     );
-};
+  };
 
 export default PostPage;

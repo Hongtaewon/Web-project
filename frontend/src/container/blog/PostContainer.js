@@ -2,16 +2,14 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from "redux";
 import * as postActions from "store/modules/post";
-import {PostEditor} from 'components/blog';
+import {Post} from 'components/blog';
 
-class EditorContainer extends Component {
+class PostContainer extends Component {
 
-
-
-  getPost = async (id) => {
+  getPost = async (userid,postid) => {
     const { PostActions } = this.props;
     try {
-      await PostActions.getPost(id);
+      await PostActions.getPost(userid,postid);
     } catch (e) {
       console.log("error log :" + e);
     }
@@ -36,19 +34,23 @@ class EditorContainer extends Component {
   }
 
   componentDidMount() {
-    const { id } = this.props;
+    const { id,postContents } = this.props;
+    console.log(postContents, id);
     if (id) {
-      this.getPost(id);
+      this.getPost(1,id);
     }    
   }
 
 
   render() {
 
-    const { id } = this.props;
+    const { post,success } = this.props;
 
-    return ( 
-        <PostEditor writePost={this.writePost} id={id}/>
+    return (
+      <div>
+      
+        {success && <Post post={post}/>}
+      </div>
     );
   }
 }
@@ -57,10 +59,11 @@ export default connect(
   state => ({
     loading: state.pender.pending["post/GET_POST"],
     error: state.pender.failure["post/GET_POST"],
-    success: state.pender.success["post/GET_POST"]
+    success: state.pender.success["post/GET_POST"],
+    post: state.post.get("post"),
   }),
   dispatch => ({
     PostActions: bindActionCreators(postActions, dispatch)
   })
-)(EditorContainer);
+)(PostContainer);
 

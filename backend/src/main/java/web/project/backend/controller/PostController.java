@@ -48,16 +48,14 @@ public class PostController {
 	}*/
 	
 	@GetMapping("/{blogid}/post/{postid}")
-	public APIMessage<?> getPost(@PathVariable Long blogid,
+	public ResponseEntity<?> getPost(@PathVariable Long blogid,
 									@PathVariable Long postid)
 	{
 		APIMessage<Blog_post> message = new APIMessage<>("blog_post");
 		
 		Blog_post post = postService.getPost(blogid, postid);
 		
-		message.getBody().setAny(post);
-		
-		return message;
+		return ResponseEntity.ok(post);
 		
 	}
 	
