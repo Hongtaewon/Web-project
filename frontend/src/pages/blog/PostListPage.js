@@ -1,12 +1,16 @@
 import React from "react";
-import {Header, Content} from 'components/home';
+import {Header, BlogTemplate} from 'components/blog';
+import PostListContainer from 'container/blog/PostListContainer'
 
-const PostListPage = () => {
+const PostListPage = ({match}) => {
+
+    
+    const { id } = match.params;
+
     return (
-    <div>
-        <Header />
-        <Content />
-    </div>
+    <BlogTemplate header={<Header/>}>
+        <PostListContainer id={id}/>
+    </BlogTemplate>
 
 
     );

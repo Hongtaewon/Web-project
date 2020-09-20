@@ -31,7 +31,6 @@ import web.project.backend.security.RedisUtil;
 import web.project.backend.security.jwt.JwtUtil;
 import web.project.backend.security.service.MyUserDetails;
 import web.project.backend.service.MemberService;
-import web.project.backend.util.message.APIMessage;
 
 @RestController
 @RequestMapping("blog/Auth")
@@ -50,10 +49,10 @@ public class AuthController {
     private final String AUTHORIZATION_HEADER = "Authorization";
     
 	@PostMapping("/signUp")
-	public ResponseEntity<?> signUp(@RequestBody APIMessage<Member> message) {
+	public ResponseEntity<?> signUp(@RequestBody Member register) {
 		
 		try{
-			if(!memberService.signUp(message))
+			if(!memberService.signUp(register))
 			{
 			}
 			return ResponseEntity.ok("가입완료");
@@ -69,48 +68,43 @@ public class AuthController {
 		
 	}
 	@PostMapping("/signIn")
-	public APIMessage<?> signIn(@RequestBody APIMessage<Member> message,
+	public ResponseEntity<?> signIn(@RequestBody Member login,
 					            HttpServletRequest req,
 					            HttpServletResponse res) throws AuthenticationException {
 		
-		APIMessage<Cookie> response = new APIMessage<>("Token");
 		
-		if(memberService.signIn(message))
+		if(memberService.signIn(login))
 		{
 			try {
-				Member member = (Member) message.getBody().getAny();
-				final String token = "Bearer " + jwtUtil.generateToken(member);
-	            final String refreshJwt = jwtUtil.generateRefreshToken(member);
+				final String token = "Bearer " + jwtUtil.generateToken(login);
+	            final String refreshJwt = jwtUtil.generateRefreshToken(login);
 	            Cookie refreshToken = cookieUtil.createCookie(JwtUtil.REFRESH_TOKEN_NAME, refreshJwt);
-	            redisUtil.setDataExpire(refreshJwt, member.getLoginid(), JwtUtil.REFRESH_TOKEN_VALIDATION_SECOND);
+	            redisUtil.setDataExpire(refreshJwt, login.getLoginid(), JwtUtil.REFRESH_TOKEN_VALIDATION_SECOND);
 	            res.addHeader(AUTHORIZATION_HEADER, token);
 	            res.addCookie(refreshToken);
-	            response.getReturn().setReason(HttpStatus.OK.toString());
-	            return response;
+	            return ResponseEntity.ok("로그인 완료");
 			} catch (Exception e) {
-	            response.getReturn().setReason(HttpStatus.UNAUTHORIZED.toString());
-	            return response;
+				return new ResponseEntity<>(Collections.singletonMap("JWTException",
+	                    e.getLocalizedMessage()), HttpStatus.UNAUTHORIZED);
 	        }
 		}
 		else
 		{
-			response.getReturn().setReason(HttpStatus.UNAUTHORIZED.toString());
-            return response;
+			return new ResponseEntity<>(Collections.singletonMap("LoginException",
+                    "비밀번호 또는 아이디가 틀렸습니다."), HttpStatus.UNAUTHORIZED);
 		}
 	}
 	
 	@PostMapping("/info")
     //@PreAuthorize("hasRole('USER')")
-    public APIMessage<?> getCurrentUser(@CurrentUser MyUserDetails myUserDetails) {
-		System.out.println(myUserDetails);
+    public ResponseEntity<?> getCurrentUser(@CurrentUser MyUserDetails myUserDetails) {
         //log.debug("REST request to get user : {}", MyUserDetails.getEmail());
-		APIMessage<Member> response = new APIMessage<>("Member");
 		
 		Member member = memberService.findOne(myUserDetails.getUsername())
 				.orElseThrow(() ->
                 new UsernameNotFoundException("User not found with loginId : " + myUserDetails.getId()));
-		response.getBody().setAny(member);
-        return response;
+		
+        return ResponseEntity.ok(member);
     }
 	
 	@PostMapping("/logout")

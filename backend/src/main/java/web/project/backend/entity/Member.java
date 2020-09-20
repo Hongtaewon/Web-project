@@ -19,6 +19,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class Member extends BaseEntity{
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long idx;
 	@Column(nullable = false)
 	@NonNull
 	private String loginid; // 로그인 시 사용하는 아이디
@@ -39,7 +42,7 @@ public class Member extends BaseEntity{
 	private LocalDateTime last_login_try_Date; // 마지막으로 로그인을 시도한 시간
 	@Column
 	private int is_lock; // 로그인 제한 여부
-	@ColumnDefault("USER")
+	@Column
 	private String role; // 권한
 	
 }

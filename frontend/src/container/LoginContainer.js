@@ -4,21 +4,20 @@ import { bindActionCreators } from "redux";
 import { Redirect } from 'react-router-dom';
 import * as authActions from "store/modules/auth";
 import LoginForm from 'components/login/LoginForm';
-import APIMessage from 'pages/blog/APIMessage'
 class LoginContainer extends Component {
 
 
-  handleLogin = async (username, password,remember) => {
+  handleLogin = async (LoginID,password,remember) => {
     const { AuthActions } = this.props;
+
     const member = {
-      "loginid":username,
-      "password":password
+      loginid:LoginID,
+      password:password,
+      remember:remember.checked
     }
 
-    var message = new APIMessage("Member",member,"","");
-
     try {
-      await AuthActions.login(message);
+      await AuthActions.login(member);
     } catch (e) {
       console.log("error log :" + e);
     }

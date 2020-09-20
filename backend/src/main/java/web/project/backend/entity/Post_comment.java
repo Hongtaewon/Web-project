@@ -2,6 +2,9 @@ package web.project.backend.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 import lombok.Getter;
 
@@ -9,6 +12,9 @@ import lombok.Getter;
 @Entity(name="post_comment")
 public class Post_comment extends BaseEntity {
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long idx;
 	@Column
 	private Long post_id; //포스트 아이디
 	@Column

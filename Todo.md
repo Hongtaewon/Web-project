@@ -17,9 +17,21 @@ Web_Project Blog TodoList
 
 ~~1. Toast View를 이용해서 원하는 Post 정상적으로 띄우는지 확인~~
 	
-## 09/18 ~
+## 09/20
 
-1. Blog의 틀 완성하기
+~~1. Blog의 틀 완성하기
 	- 임시 Post 데이터를 만들어서 PostList 받아오고 Paging 구현
-	-   PostList에서 Post 클릭시 View페이지로 이동
-	- login한 사용자와 사용자의 Blog 매칭
+	- PostList에서 Post 클릭시 View페이지로 이동
+	- login한 사용자와 사용자의 Blog 매칭~~
+	
+## 09/20 ~
+
+1. PostList Page 정리
+	- 조회수, post 생성 시간 등 세부 정보 표기
+	- 카테고리 생성 및 삭제 추가
+2. Post Page 정리
+	- 상세 정보 표시 밑 목록 보기
+	- 다음 게시글, 목록보기 등 주요 기능 구현
+3. Main Page
+	- 로그인 시 내 블로그 가기 버튼 추가
+	- 각 컨텐츠 별로 기능 구현

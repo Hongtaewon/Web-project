@@ -4,7 +4,6 @@ import { bindActionCreators } from "redux";
 import { Redirect } from 'react-router-dom';
 import * as authActions from "store/modules/auth";
 import RegisterForm from 'components/register/RegisterForm';
-import APIMessage from 'pages/blog/APIMessage'
 import {Button, Dialog, DialogTitle, DialogActions} from '@material-ui/core';
 
 class RegisterContainer extends Component {
@@ -24,10 +23,8 @@ class RegisterContainer extends Component {
       "email":email
     }
 
-    var message = new APIMessage("Member",member,"","");
-
     try {
-      await AuthActions.register(message);
+      await AuthActions.register(member);
       this.handleOpen();
 
       setTimeout(() => {

@@ -15,3 +15,10 @@ Web_Project Blog Update
 ## 09/17
 ### Post page 구성
 1. Toast View를 이용해서 원하는 Post 정상적으로 띄우는지 확인
+
+## 09/20
+### PostList Page 초기 화면 구성
+1. Blog의 틀 완성하기
+	- 임시 Post 데이터를 만들어서 PostList 받아오고 Paging 구현
+	- PostList에서 Post 클릭시 View페이지로 이동
+	- login한 사용자와 사용자의 Blog 매칭

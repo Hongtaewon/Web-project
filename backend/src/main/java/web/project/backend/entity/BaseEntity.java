@@ -2,6 +2,7 @@ package web.project.backend.entity;
 
 import java.time.LocalDateTime;
 
+import javax.persistence.Column;
 import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -27,11 +28,15 @@ import lombok.Getter;
 @EntityListeners(AuditingEntityListener.class)
 public abstract class BaseEntity {
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long idx;
+	
 	@CreatedDate
-	private LocalDateTime created_date;
+	@Column(name = "created_date")
+	private LocalDateTime CreatedDate;
+	@Column(name = "created_by")
+	private Long CreatedBy;
 	@LastModifiedDate
-	private LocalDateTime modified_date;
+	@Column(name = "modified_date")
+	private LocalDateTime ModifiedDate;
+	@Column(name = "modified_by")
+	private Long ModifiedBy;
 }

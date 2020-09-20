@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from "redux";
 import * as postActions from "store/modules/post";
 import {Post} from 'components/blog';
+import { withRouter } from 'react-router-dom';
 
 class PostContainer extends Component {
 
@@ -65,5 +66,5 @@ export default connect(
   dispatch => ({
     PostActions: bindActionCreators(postActions, dispatch)
   })
-)(PostContainer);
+)(withRouter(PostContainer));
 

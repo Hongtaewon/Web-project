@@ -2,6 +2,9 @@ package web.project.backend.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 import lombok.Getter;
 
@@ -13,6 +16,9 @@ import lombok.Getter;
 @Entity
 public class Blog extends BaseEntity {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long idx;
 	@Column
 	private Long blog_name; // 블로그 이름
 	@Column

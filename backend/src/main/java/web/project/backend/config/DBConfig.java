@@ -1,4 +1,4 @@
-package web.project.backend.config;
+/*package web.project.backend.config;
 
 import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -58,3 +58,4 @@ public class DBConfig {
     }
 
 }
+*/

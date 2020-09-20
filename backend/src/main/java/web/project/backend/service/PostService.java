@@ -13,6 +13,8 @@ import java.util.Optional;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,6 +27,7 @@ import web.project.backend.entity.Blog_post;
 import web.project.backend.entity.Member;
 import web.project.backend.repository.JpaBlogPostRepository;
 import web.project.backend.repository.MemberRepository;
+import web.project.backend.repository.PostRepository;
 import web.project.backend.util.Base64Utils;
 import web.project.backend.util.JsoupUtils;
 
@@ -35,7 +38,7 @@ import web.project.backend.util.JsoupUtils;
 public class PostService {
 
 	@Autowired
-	private JpaBlogPostRepository postRepository;
+	private PostRepository postRepository;
 	
 	private static final String BLOG_IMAGE_PATH = System.getProperty("user.dir") + "\\src\\main\\resources\\blogImage";
 	private static final String DB_IMAGE_PATH = "http:\\\\localhost:8080\\blogImage\\";
@@ -51,6 +54,12 @@ public class PostService {
 		
 		return post;
 	}
+	/*
+	 * 포스트리스트
+	 * */
+	public Page<Blog_post> findAllByOrderByCreatedDateDescPageable(Long blogid,Pageable pageable) {
+        return postRepository.findByblogIdOrderByIdxDesc(blogid, pageable);
+    }
 	
 	/*
 	 * 블로그에서 넘어온 값 저장
@@ -62,43 +71,47 @@ public class PostService {
 		
 		List<String> images = JsoupUtils.ImageParser(PostContent);
 		
-		
-		List<byte[]> byteImages = Base64Utils.decodeBase64ToBytes(images);
-		List<String> ImageDBPath = new ArrayList<String>();
-		String ImagePath = BLOG_IMAGE_PATH+"\\"+userIdx;
-		
-		if(MakeBlogDir(ImagePath))
+		if(images.size() != 0)
 		{
-			Path path = Paths.get(ImagePath);
-
-			try {
-				for(int i=0;i<byteImages.size();i++)
-				{
-					if(byteImages.get(i) == null) 
-						continue;
-					
-					String name = String.valueOf(i+1);
-					
-					if(images.get(i).startsWith(Base64Utils.BASE_64_PREFIX_GIF))
-						name += ".gif";
-					else if(images.get(i).startsWith(Base64Utils.BASE_64_PREFIX_JPEG))
-						name += ".jpg";
-					else if(images.get(i).startsWith(Base64Utils.BASE_64_PREFIX_PNG))
-						name += ".png";
-					
-		            Files.copy(new ByteArrayInputStream(byteImages.get(i)), path.resolve(name));
-		            ImageDBPath.add(DB_IMAGE_PATH+userIdx+"\\"+name);
-				}
-	        } catch (Exception e) {
-	        	//Image 저장 실패
-	            throw new Exception();
-	        }
+			List<byte[]> byteImages = Base64Utils.decodeBase64ToBytes(images);
+			List<String> ImageDBPath = new ArrayList<String>();
+			String ImagePath = BLOG_IMAGE_PATH+"\\"+userIdx;
 			
-			for(int i=0;i<ImageDBPath.size();i++)
+			if(MakeBlogDir(ImagePath))
 			{
-				PostContent = PostContent.replace(images.get(i), ImageDBPath.get(i));
+				Path path = Paths.get(ImagePath);
+
+				try {
+					for(int i=0;i<byteImages.size();i++)
+					{
+						if(byteImages.get(i) == null) 
+							continue;
+						
+						String name = String.valueOf(i+1);
+						
+						if(images.get(i).startsWith(Base64Utils.BASE_64_PREFIX_GIF))
+							name += ".gif";
+						else if(images.get(i).startsWith(Base64Utils.BASE_64_PREFIX_JPEG))
+							name += ".jpg";
+						else if(images.get(i).startsWith(Base64Utils.BASE_64_PREFIX_PNG))
+							name += ".png";
+						
+			            Files.copy(new ByteArrayInputStream(byteImages.get(i)), path.resolve(name));
+			            ImageDBPath.add(DB_IMAGE_PATH+userIdx+"\\"+name);
+					}
+		        } catch (Exception e) {
+		        	//Image 저장 실패
+		            throw new Exception();
+		        }
+				
+				for(int i=0;i<ImageDBPath.size();i++)
+				{
+					PostContent = PostContent.replace(images.get(i), ImageDBPath.get(i));
+				}
 			}
 		}
+		
+		
 		
 		Blog_post writePost = new Blog_post(userIdx, post.getTitle(), PostContent);
 		

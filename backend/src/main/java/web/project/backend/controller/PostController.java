@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.tomcat.jni.File;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
@@ -25,7 +27,6 @@ import web.project.backend.entity.Blog_post;
 import web.project.backend.security.CurrentUser;
 import web.project.backend.security.service.MyUserDetails;
 import web.project.backend.service.PostService;
-import web.project.backend.util.message.APIMessage;
 
 @RestController
 @RequestMapping("blog")
@@ -36,28 +37,25 @@ public class PostController {
 	private PostService postService;
 
 	
-	
-	/*@GetMapping("/{id}")
-	public APIMessage<?> getPost(@PathVariable Long id) {
-		Long a = (long) 1;
-		Blog_post post = postService.post(a);
-		APIMessage<Blog_post> message = new APIMessage<>("blog-post");
-		message.getBody().setAny(post);
-		
-		return message;
-	}*/
-	
 	@GetMapping("/{blogid}/post/{postid}")
 	public ResponseEntity<?> getPost(@PathVariable Long blogid,
 									@PathVariable Long postid)
 	{
-		APIMessage<Blog_post> message = new APIMessage<>("blog_post");
 		
 		Blog_post post = postService.getPost(blogid, postid);
 		
 		return ResponseEntity.ok(post);
 		
 	}
+	
+	@GetMapping(value = "/{blogid}")
+    public ResponseEntity<List<Blog_post>> getPostList(@PathVariable Long blogid,
+    													Pageable pageable) {
+        log.debug("REST request to get Posts : {}", pageable);
+        Page<Blog_post> posts = postService.findAllByOrderByCreatedDateDescPageable(blogid,pageable);
+        //Page<PostDto> postDto = posts.map(post -> new PostDto((post)));
+        return new ResponseEntity<>(posts.getContent(), HttpStatus.OK);
+    }
 	
 	@PostMapping(value = "/postwrite")
     public ResponseEntity<?> registerPost(@CurrentUser MyUserDetails myUserDetails,

@@ -5,7 +5,7 @@ const API_BASE_URL = '';
 
 //Post 관련 API
 export const getPost = (blogid,postId) => axios.get(`${API_BASE_URL}/blog/${blogid}/post/${postId}`);
-export const getPosts = (page,size) => axios.get(`${API_BASE_URL}/blog/blog-post?page={${page}&size=${size}}`);
+export const getPosts = (blogid,page,size) => axios.get(`${API_BASE_URL}/blog/${blogid}?page=${page}&size=${size}`);
 export const writePost = (title, content) => axios.post(`${API_BASE_URL}/blog/postwrite`, {title,content},
     {
         headers: {
@@ -13,7 +13,7 @@ export const writePost = (title, content) => axios.post(`${API_BASE_URL}/blog/po
         }
     }
 );
-export const modifiedPost = (id,APIMessage) => axios.post(`${API_BASE_URL}/blog/blog-post/${id}`,{APIMessage},
+export const modifiedPost = (id,title, content) => axios.post(`${API_BASE_URL}/blog/blog-post/${id}`,{id,title, content},
     {
         headers: {
         Authorization: getToken()
@@ -29,7 +29,7 @@ export const deletePost = (id) => axios.post(`${API_BASE_URL}/blog/blog-post/${i
 );
 
 //Member 관련 API
-export const login = (APIMessage) => axios.post(`${API_BASE_URL}/blog/Auth/signIn`,APIMessage);
+export const login = (member) => axios.post(`${API_BASE_URL}/blog/Auth/signIn`,member);
 export const logout = () => axios.post(`${API_BASE_URL}/blog/Auth/logout`,{},
     {
         headers: {
@@ -58,7 +58,7 @@ export const deleteMember = (id) => axios.post(`${API_BASE_URL}/member/info`,{},
         }
     }
 );
-export const register = (APIMessage) => axios.post(`${API_BASE_URL}/blog/Auth/signUp`,APIMessage);
+export const register = (member) => axios.post(`${API_BASE_URL}/blog/Auth/signUp`,member);
 
 //blog 관련 API
 export const getBlog = (id) => axios.get(`${API_BASE_URL}/blog/info/${id}`);

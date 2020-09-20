@@ -14,9 +14,12 @@ import lombok.RequiredArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Blog_post extends BaseEntity{
 	
-	@Column
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long idx;
 	@NonNull
-	private Long blog_id; //블로그 아이디
+	@Column(name = "blog_id")
+	private Long blogId; //블로그 아이디
 	@Column
 	@NonNull
 	private String title; //포스트 제목

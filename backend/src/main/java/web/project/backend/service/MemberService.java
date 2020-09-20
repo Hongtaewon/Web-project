@@ -12,7 +12,6 @@ import web.project.backend.Exception.ConflictException;
 import web.project.backend.entity.Member;
 import web.project.backend.repository.JpaMemberRepository;
 import web.project.backend.repository.MemberRepository;
-import web.project.backend.util.message.APIMessage;
 
 
 @Transactional
@@ -38,7 +37,7 @@ public class MemberService {
 										.orElse(null);
 		
 		//member가 없음
-		if(m.equals(null))
+		if(m == null)
 			return false;
 		else
 		{
@@ -52,9 +51,8 @@ public class MemberService {
 	/*
 	 * 회원 가입
 	 * */
-	public boolean signUp(APIMessage<Member> message) throws Exception {
+	public boolean signUp(Member member) throws Exception {
 		//같은 이름이 있는 중복 회원 x
-		Member member = (Member) message.getBody().getAny();
 		
 		if(validateDubplicateLoginId(member))
 		{
@@ -80,9 +78,8 @@ public class MemberService {
 	/*
 	 * 로그인
 	 * */
-	public boolean signIn(APIMessage<Member> message) {
+	public boolean signIn(Member member) {
 		
-		Member member = (Member) message.getBody().getAny();
 		if(validateLoginMemberInfo(member))
 			return true;
 		else
