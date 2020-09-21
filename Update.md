@@ -22,3 +22,6 @@ Web_Project Blog Update
 	- 임시 Post 데이터를 만들어서 PostList 받아오고 Paging 구현
 	- PostList에서 Post 클릭시 View페이지로 이동
 	- login한 사용자와 사용자의 Blog 매칭
+	
+2. APIMessage 제거
+	- APIMessage format 대신 ResponseEntity를 사용
