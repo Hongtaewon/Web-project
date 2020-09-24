@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 import web.project.backend.Exception.ConflictException;
 import web.project.backend.entity.Member;
 import web.project.backend.repository.JpaMemberRepository;
-import web.project.backend.repository.MemberRepository;
 
 
 @Transactional
@@ -56,13 +55,13 @@ public class MemberService {
 		
 		if(validateDubplicateLoginId(member))
 		{
-			throw new ConflictException("아이디", member.getLoginid());
+			throw new ConflictException("LoginId", member.getLoginid());
 		}
 		else
 		{
 			if(validateDubplicateEmail(member))
 			{
-				throw new ConflictException("이메일", member.getEmail());
+				throw new ConflictException("Email", member.getEmail());
 			}
 			Member saveMember = new Member(member.getLoginid(), 
 										member.getName(), 

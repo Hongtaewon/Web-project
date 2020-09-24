@@ -7,8 +7,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
 @Getter
+@Setter
 @Entity(name="blog_post")
 @RequiredArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -34,5 +36,5 @@ public class Blog_post extends BaseEntity{
 	private int likes; // post_like 테이블의 cnt를 해서 저장함.
 	@Column
 	private String tag; // tag는 ,로 구분
-
+	
 }

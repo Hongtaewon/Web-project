@@ -25,3 +25,8 @@ Web_Project Blog Update
 	
 2. APIMessage 제거
 	- APIMessage format 대신 ResponseEntity를 사용
+	
+## 09/24
+### Post의 이미지 저장 위치 변경
+1. 각 포스트별 저장된 이미지 위치 변경 어플리케이션 내부 -> 외부
+	- 추후 또 다른 경로로 위치를 변경하려면 application.properties에서 변경 가능

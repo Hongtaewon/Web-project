@@ -5,8 +5,6 @@ import java.time.LocalDateTime;
 
 import javax.persistence.*;
 
-import org.hibernate.annotations.ColumnDefault;
-
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

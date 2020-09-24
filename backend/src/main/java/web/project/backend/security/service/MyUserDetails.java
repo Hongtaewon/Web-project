@@ -12,7 +12,11 @@ import java.util.List;
 import java.util.Map;
 
 public class MyUserDetails implements UserDetails {
-    private Long id;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -2464002246606807570L;
+	private Long id;
     private String loginid;
     private String name;
     private String email;

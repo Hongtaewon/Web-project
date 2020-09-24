@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import web.project.backend.entity.Member;
 import web.project.backend.repository.JpaMemberRepository;
-import web.project.backend.repository.MemberRepository;
 
 import static org.assertj.core.api.Assertions.*;
 

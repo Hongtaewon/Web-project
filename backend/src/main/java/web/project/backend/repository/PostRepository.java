@@ -11,7 +11,11 @@ public interface PostRepository {
 	
 	Page<Blog_post> findByblogIdOrderByIdxDesc(Long blogId,Pageable pageable);
 	
+	Optional<Blog_post> findById(Long postId);
+	
+	Long GetNextIdx();
+	
 	Blog_post save(Blog_post post);
 	
-	Optional<Blog_post> findById(Long postId);
+	void delete(Blog_post post);
 }
