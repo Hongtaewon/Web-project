@@ -6,6 +6,8 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,6 +32,7 @@ import web.project.backend.service.MemberService;
 @RequestMapping("blog/Auth")
 @Log4j2
 public class AuthController {
+	//private static Logger LOGGER = LoggerFactory.getLogger(Log4j2.class);
 	
 	@Autowired
 	private MemberService memberService;
@@ -44,7 +47,8 @@ public class AuthController {
     
 	@PostMapping("/signUp")
 	public ResponseEntity<?> signUp(@RequestBody Member register) {
-		
+		//log.info("[log2 test message]");
+		//LOGGER.info("[log test message]");
 		try{
 			if(!memberService.signUp(register))
 			{

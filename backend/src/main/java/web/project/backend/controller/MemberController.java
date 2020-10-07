@@ -14,7 +14,6 @@ import web.project.backend.service.MemberService;
 
 @RestController
 @RequestMapping("blog/member")
-@Log4j2
 public class MemberController {
 
 	@Autowired

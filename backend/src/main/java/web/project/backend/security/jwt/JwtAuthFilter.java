@@ -12,11 +12,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import io.jsonwebtoken.ExpiredJwtException;
+import web.project.backend.entity.Member;
+import web.project.backend.repository.MemberRepository;
 import web.project.backend.security.CookieUtil;
 import web.project.backend.security.RedisUtil;
 import web.project.backend.security.service.MyUserDetailsService;
@@ -25,6 +28,9 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
 	@Autowired
     private MyUserDetailsService userDetailsService;
+	
+	@Autowired
+    private MemberRepository memberRepository;
 
     @Autowired
     private JwtUtil jwtUtil;
@@ -38,8 +44,8 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
-
-    	String refreshJwt = null;
+    	
+    	String refreshJwt = cookieUtil.getCookie(httpServletRequest, "refreshToken").getValue();
     	
     	try {
             String jwt = getJwtFromRequest(httpServletRequest);
@@ -67,9 +73,9 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             logger.error("Could not set user authentication in security context", ex);
         }
 
-        /*try{
+        try{
             if(refreshJwt != null){
-                refreshUname = redisUtil.getData(refreshJwt);
+            	String refreshUname = redisUtil.getData(cookieUtil.getCookie(httpServletRequest,"refreshToken").getValue());
                 
                 if(refreshUname != null && refreshUname.equals(jwtUtil.getUsername(refreshJwt))){
                     UserDetails userDetails = userDetailsService.loadUserByUsername(refreshUname);
@@ -87,7 +93,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             }
         }catch(ExpiredJwtException e){
 
-        }*/
+        }
 
         filterChain.doFilter(httpServletRequest,httpServletResponse);
     }

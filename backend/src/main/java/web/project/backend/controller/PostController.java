@@ -22,7 +22,6 @@ import web.project.backend.service.PostService;
 
 @RestController
 @RequestMapping("blog")
-@Log4j2
 public class PostController {
 	
 	@Autowired
@@ -43,7 +42,7 @@ public class PostController {
 	@GetMapping(value = "/{blogid}")
     public ResponseEntity<List<Blog_post>> getPostList(@PathVariable Long blogid,
     													Pageable pageable) {
-        log.debug("REST request to get Posts : {}", pageable);
+        //log.debug("REST request to get Posts : {}", pageable);
         Page<Blog_post> posts = postService.findAllByOrderByCreatedDateDescPageable(blogid,pageable);
         //Page<PostDto> postDto = posts.map(post -> new PostDto((post)));
         return new ResponseEntity<>(posts.getContent(), HttpStatus.OK);
